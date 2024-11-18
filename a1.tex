@@ -1,42 +1,14 @@
-% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
-\pdfoutput=1
-% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
-
-\documentclass[11pt]{article}
-
-% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
-% Change to "preprint" to generate a non-anonymous version with page numbers.
-\usepackage[preprint]{acl}
-
-% Standard package includes
-\usepackage{times}
-\usepackage{latexsym}
-
-% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
-\usepackage[T1]{fontenc}
-% For Vietnamese characters
-% \usepackage[T5]{fontenc}
-% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
-
-% This assumes your files are encoded as UTF8
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
-
-% This is not strictly necessary, and may be commented out,
-% but it will improve the layout of the manuscript,
-% and will typically save some space.
-\usepackage{microtype}
-
-%\usepackage{natbib}
-
-\usepackage{inconsolata}
-
-\usepackage{booktabs}
-
-
+\usepackage{upquote}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
 \usepackage{graphicx}
-\usepackage{multirow}
+\usepackage{listings}
+\newenvironment{statement}[2][Statement]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\usepackage{xcolor}
 
-\usepackage{amsmath}
 
 
 
@@ -67,6 +39,13 @@
 \section{26.2-2}
 \section{26.2-4}
 %zhigao
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午7.32.25.png}
+    \caption{26.1(a)}
+    \label{fig:enter-label}
+\end{figure}
 \section{26.2-3}
 %zhigao
 \section{26.2-7}
