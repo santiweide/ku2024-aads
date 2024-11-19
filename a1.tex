@@ -53,6 +53,8 @@ f'(x,v) = f(u,v)<=c(u,v) = c(x,v)\\ \nonumber
 f'(y,z) = f(y,z) <= c(y,z), when (y,z) \neq (u,x) and (y,z) \neq (x,v) \nonumber
 \end{gather}
 
+Also we have the $f'(y,z)>= 0$ for any $(y,z)$.
+
 So the $f'$ we constructed obeys the flow capability constraints.
 
 \subsection{Proof of flow - flow conservation}
@@ -112,24 +114,79 @@ For the first case, we here prove the $s=u$ case since the $s=v$ case would be s
 \end{aligned}
  \end{equation}
 
-For the second case, we have: 
+For the second case, we have $x$ not connected to $s$ or $t$. Then we can prove as follows:
 \begin{equation}
 \begin{aligned}
  |f'| &= f_s\\
  &= \sum_{y \in V'} f'(s,y) - \sum_{y \in V'} f'(y,s) \\
+ &= \sum_{y \in V-{x}} f'(s,y) + f'(s,x) - \sum_{y \in V-{x}} f'(y,s) - f'(x,s) \\
+ &= \sum_{y \in V} f'(s,y) + 0 - \sum_{y \in V} f'(y,s) - 0 \\
+ &= \sum_{y \in V} f(s,y) - \sum_{y \in V} f(y,s)  \\
  &= |f|
  \end{aligned}
  \end{equation}
 
-As all above, the proof is done.
+As all above, the proof is done. We also notice that we did not make use of the feature that $f$ is a maximum flow in $G$, so for all the flows the $|f'| =|f|$ hold.
 
+$Q.E.D.$
 \section{26.1-4}
 %wanjing
 \textbf{Question: } Let $f$ be a flow network, and let $a$ be a real number. The scalar flow product denoted $af$, is a function from V x V to $\mathbb{R}$ defined by 
 
 $(af)(u, v) = a \cdot f(u, v).$
 
-Prove that the flows in a network from a convex set. That is, show that if $f_1$ anf $f_2$ are flows, then so is $af_1+(1-a)f_2$ for all $a$ in the range $0<=a<=1$
+Prove that the flows in a network form a convex set. That is, show that if $f_1$ and $f_2$ are flows, then so is $af_1+(1-a)f_2$ for all $a$ in the range $0<=a<=1$
+
+\textbf{Answer:}
+
+We are asked to prove that for all $0<=a<=1$, $af_1+(1-a)f_2$ satisfy both the flow conservation and the capacity constraint when $f_1$ and $f_2$ are valid flows. Let $G=(V,E)$ with $\{s, t\}$ and capability $c$, and $f1$, $f2$ are two flows in $G$.
+
+
+\subsection{Proof of capability constraint}
+First we prove the upper bound of the capability constraint:
+\begin{equation}
+\begin{aligned}
+f'(u,v) &= (af_1)(u,v)+((1-a)f_2)(u,v) \\
+ &= a \cdot f_1(u,v)+(1-a) \cdot  f_2(u,v) \\
+ &<= a \cdot c(u,v)+(1-a) \cdot  c(u,v) \\
+ &= c(u,v) \\
+\end{aligned}
+\end{equation}
+
+Second we prove the lower bound of the capability constraint:
+\begin{equation}
+\begin{aligned}
+f'(u,v) &= (af_1)(u,v)+((1-a)f_2)(u,v) \\
+ &>= a \cdot 0+(1-a) \cdot 0 \\
+ &= 0 \\
+\end{aligned}
+\end{equation}
+
+
+\subsection{Proof of flow conservation}
+
+For $f1$ and $f2$ we have;
+\begin{equation}
+\begin{aligned}
+\sum_{y \in V} f_1(u,y) - \sum_{y \in V} f_1(y,u) &= 0 \\
+\sum_{y \in V} f_2(u,y) - \sum_{y \in V} f_2(y,u) &= 0
+\end{aligned}
+\end{equation}
+
+
+For $u \in V$, $u \notin \{s, t\}$: 
+\begin{equation}
+\begin{aligned}
+&\sum_{y \in V} f'(u,y) - \sum_{y \in V} f'(y,u) \\
+&= \sum_{y \in V} a \cdot f_1(u,y) + (1-a) \cdot f_2(u,y)  - \sum_{y \in V}  a \cdot f_1(y,u) + (1-a) \cdot f_2(y,u)\\ 
+&= \sum_{y \in V} a \cdot f_1(u,y) + \sum_{y \in V}(1-a) \cdot f_2(u,y) - \sum_{y \in V}  a \cdot f_1(y,u) -  \sum_{y \in V}  (1-a) \cdot f_2(y,u)\\
+&= \sum_{y \in V} a \cdot f_1(u,y)  - \sum_{y \in V}  a \cdot f_1(y,u) + \sum_{y \in V}(1-a) \cdot f_2(u,y) -  \sum_{y \in V}  (1-a) \cdot f_2(y,u)\\
+&= 0 + 0\\
+&= 0
+\end{aligned}
+\end{equation}
+
+$Q.E.D.$
 
 \section{26.1-7}
 
