@@ -31,8 +31,105 @@
 %wanjing
 \textbf{Question: }Show that splitting an edge in a flow network yields an equivalent network. More formally, suppose that flow network $G$ contains edge $(u, v)$, and we create a new flow network $G'$ by creating a new vertex $x$ and replacing $(u, v)$ by new edges $(u, x)$ and $(x, v)$ with $c(u, x) = c(x, v) = c(u, v)$. Show that a maximum flow in $G'$ has the same value as a maximum flow in $G$.
 
+\textbf{Answer: }As noted in the Question, we have $G'=(V',E')$ where $V'=V\cup{x}$, $E'=E-{(u,v)}\cup{(u,x), (v, x)}$.
+
+First we should have a flow in $G'$ that is both a flow and a maximum flow. Construct $f'$ in $G'$ as follows:
+\begin{equation}
+f'(y,z) = 
+\begin{cases}
+f(y,z) &\mbox{if (y,z) $\neq$ (u,x) and (y,z) $\neq$ (x,v)}\\
+f(u,v) &\mbox{if (y,z) = (u,x) or (y,z) = (x,v)}.
+\end{cases}
+\end{equation}
+, where the $f$ is the maximum flow in $G$, and the only difference between $f$ and $f'$ is the $f(u,v)$ is replaced by two flows on the new added vertex $x$, valuing $f(u,v)$.
+
+\subsection{Proof of flow - capability constraints}
+
+According to the $c(u, x) = c(x, v) = c(u, v)$ in Question, we have:
+
+\begin{gather}
+f'(u,x) = f(u,v) <= c(u,v) = c(u,x)\\ \nonumber
+f'(x,v) = f(u,v)<=c(u,v) = c(x,v)\\ \nonumber
+f'(y,z) = f(y,z) <= c(y,z), when (y,z) \neq (u,x) and (y,z) \neq (x,v) \nonumber
+\end{gather}
+
+So the $f'$ we constructed obeys the flow capability constraints.
+
+\subsection{Proof of flow - flow conservation}
+
+Here we look at the flow going throw three vertex: $u$, $v$, and $x$. The rest of the vertex are naturally proved by $f$ is obeying the flow conservation. 
+
+\textbf{Case $u$} Assume $u \notin \{s,t\} $, since $f$ obeys flow conservation, we can do as follows:
+
+\begin{equation}
+\begin{aligned}
+\sum_{y \in V'} f'(u,y) &= \sum_{y \in V - \{x\}} f'(u,y) + f'(u,x)\\
+&= \sum_{y \in V - \{v\}} f(u,y) + f(u,v)\\
+&= \sum_{y \in V} f(u,y) \\
+&= \sum_{y \in V} f(y,u) \\
+&= \sum_{y \in V} f'(y,u) \\
+\end{aligned}
+\end{equation}
+
+\textbf{Case $v$}
+This is quite symmetric to the case $u$.
+\begin{equation}
+\begin{aligned}
+\sum_{y \in V'} f'(y,v) &= \sum_{y \in V - \{x\}} f'(y,v) + f'(x,v)\\
+&= \sum_{y \in V - \{u\}} f(y,v) + f(u,v)\\
+&= \sum_{y \in V} f(y,v) \\
+&= \sum_{y \in V} f(v,y) \\
+&= \sum_{y \in V} f'(v,y) \\
+\end{aligned}
+\end{equation}
+
+\textbf{Case $x$}
+
+\begin{equation}
+\begin{aligned}
+\sum_{y \in V'} f'(y,x) &= f'(u,x)
+&= f(u,v)
+&= f'(x,v)
+&= \sum_{y \in V'} f'(x,y)
+\end{aligned}
+\end{equation}
+
+
+So the $f'$ we constructed obeys the flow flow conservation, and $f'$ is a valid flow.
+
+\subsection{Proof of maximum flow}
+Here we have two cases: one is $s \in \{u, v\}$ and the other is $s \notin \{u, v\}$. 
+
+For the first case, we here prove the $s=u$ case since the $s=v$ case would be symmetric.
+\begin{equation}
+\begin{aligned}
+ |f'| &= f_s\\
+ &= \sum_{y \in V'} f'(u,y) - \sum_{y \in V'} f'(y,u) \\
+ &= \sum_{y \in V'-{x}} f'(u,y) + f'(u,x) - \sum_{y \in V'} f'(y,u)\\
+ &= \sum_{y \in V-{v}} f(u,y) + f(u,v) - \sum_{y \in V} f(y,u)\\
+ &= \sum_{y \in V} f(u,y)  - \sum_{y \in V} f(y,u)\\
+ &=|f|
+\end{aligned}
+ \end{equation}
+
+For the second case, we have: 
+\begin{equation}
+\begin{aligned}
+ |f'| &= f_s\\
+ &= \sum_{y \in V'} f'(s,y) - \sum_{y \in V'} f'(y,s) \\
+ &= |f|
+ \end{aligned}
+ \end{equation}
+
+As all above, the proof is done.
+
 \section{26.1-4}
 %wanjing
+\textbf{Question: } Let $f$ be a flow network, and let $a$ be a real number. The scalar flow product denoted $af$, is a function from V x V to $\mathbb{R}$ defined by 
+
+$(af)(u, v) = a \cdot f(u, v).$
+
+Prove that the flows in a network from a convex set. That is, show that if $f_1$ anf $f_2$ are flows, then so is $af_1+(1-a)f_2$ for all $a$ in the range $0<=a<=1$
 
 \section{26.1-7}
 
