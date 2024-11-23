@@ -308,7 +308,7 @@ f(u, v) = 0 \quad \text{for all edges } (u, v) \in G.
 \]
 
 Therefore, \( f(u, v) \) is integral, and the total flow \( |f| = 0 \) is an integer.\\
-\textbf{2. Inductive Argument for Flow Updates}  
+\textbf{2. Inductive argument for flow updates}  
 
 During each iteration of the Ford-Fulkerson algorithm:
 \begin{enumerate}
@@ -332,7 +332,7 @@ Since both the initial flow \( f \) and the update \( \Delta \) are integers, th
 \textbf{3. Termination}  
 
 The Ford-Fulkerson algorithm terminates when no augmenting path exists in the residual graph. At this point, the flow \( f \) is a \textit{maximum flow}. Throughout the algorithm, \( f(u, v) \) remains integral because each update is based on an integral \( \Delta \).\\
-\textbf{4. Total Flow \( |f| \)}  
+\textbf{4. Total flow \( |f| \)}  
 
 The total flow \( |f| \) is defined as the sum of flows out of the source \( s \):
 \[
