@@ -18,7 +18,7 @@
 \author{Author \\
   Wanjing Hu / fng685@alumni.ku.dk  \\
   Zhigao Yan / sxd343@alumni.ku.dk  \\
-  Wanjing Hu / fng685@alumni.ku.dk  \\
+  Wenshuo Dong / gnj461@alumni.ku.dk  \\
   Wanjing Hu / fng685@alumni.ku.dk  \\
 } 
  
@@ -256,6 +256,88 @@ By the definition of the augmenting path, the maximum amount by which we can inc
 So the flow on each edge is \(c_f(p)\), so \( |f_p| = c_f(p)> 0\)
 %zhigao
 \section{26.2-9}
-\section{26.3-2}
+\subsection{Flow conservation property}
+The flow conservation property states that for every vertex $v$ in the network $G$ (except for the source $s$ and sink $t$), the flow entering $v$ equals the flow leaving $v$. Mathematically, for a flow $f$:
+\[
+\sum_{u} f(u, v) = \sum_{w} f(v, w) \quad \text{for all } v \neq s, t.
+\]
 
+When compute the augmented flow $f \uparrow f'$, the new flow at any edge $(u, v)$ is defined as:
+\[
+(f \uparrow f')(u, v) = f(u, v) + f'(u, v).
+\]
+
+Since both $f$ and $f'$ individually satisfy the flow conservation property:
+\[
+\sum_{u} f(u, v) = \sum_{w} f(v, w) \quad \text{and} \quad \sum_{u} f'(u, v) = \sum_{w} f'(v, w),
+\]
+
+Adding these equations gives:
+\[
+\sum_{u} \big(f(u, v) + f'(u, v)\big) = \sum_{w} \big(f(v, w) + f'(v, w)\big).
+\]
+This shows that $f \uparrow f'$ satisfies the flow conservation property.
+
+\subsection{Capacity constraint}
+The capacity constraint states that for every edge $(u, v)$ in the network, the flow on the edge must not exceed the edge's capacity $c(u, v)$:
+\[
+f(u, v) \leq c(u, v) \quad \text{for all } (u, v) \in G.
+\]
+
+For $f \uparrow f'$, the flow on any edge $(u, v)$ becomes:
+\[
+(f \uparrow f')(u, v) = f(u, v) + f'(u, v).
+\]
+
+If $f(u, v)$ and $f'(u, v)$ both individually satisfy the capacity constraint:
+\[
+f(u, v) \leq c(u, v) \quad \text{and} \quad f'(u, v) \leq c(u, v),
+\]
+
+Then their sum might exceed the capacity:
+\[
+f(u, v) + f'(u, v) \leq 2 \cdot c(u, v),
+\]
+This violates the capacity constraint unless special conditions are imposed on $f$ and $f'$.
+\section{26.3-2}
+\textbf{1. Initialization}  
+
+Initially, the flow \( f \) is set to zero:
+\[
+f(u, v) = 0 \quad \text{for all edges } (u, v) \in G.
+\]
+
+Therefore, \( f(u, v) \) is integral, and the total flow \( |f| = 0 \) is an integer.\\
+\textbf{2. Inductive Argument for Flow Updates}  
+
+During each iteration of the Ford-Fulkerson algorithm:
+\begin{enumerate}
+    \item An augmenting path \( P \) is identified in the residual graph.
+    \item The bottleneck capacity \( \Delta \) of the path is computed as:
+    \[
+    \Delta = \min \{ c_f(u, v) \mid (u, v) \text{ is an edge in } P \},
+    \]
+    where \( c_f(u, v) \) is the residual capacity of edge \( (u, v) \).  
+    Since \( c \) is integral and \( c_f(u, v) \) is derived from \( c \), the bottleneck \( \Delta \) is also integral.
+    \item The flow along \( P \) is updated by adding \( \Delta \) to forward edges and subtracting \( \Delta \) from backward edges in \( P \). For each edge \( (u, v) \) in \( P \):
+    \[
+    f(u, v) \gets f(u, v) + \Delta \quad \text{(if \( (u, v) \) is a forward edge)},
+    \]
+    \[
+    f(v, u) \gets f(v, u) - \Delta \quad \text{(if \( (u, v) \) is a backward edge)}.
+    \]
+\end{enumerate}
+
+Since both the initial flow \( f \) and the update \( \Delta \) are integers, the updated flow \( f(u, v) \) remains integral.\\
+\textbf{3. Termination}  
+
+The Ford-Fulkerson algorithm terminates when no augmenting path exists in the residual graph. At this point, the flow \( f \) is a \textit{maximum flow}. Throughout the algorithm, \( f(u, v) \) remains integral because each update is based on an integral \( \Delta \).\\
+\textbf{4. Total Flow \( |f| \)}  
+
+The total flow \( |f| \) is defined as the sum of flows out of the source \( s \):
+\[
+|f| = \sum_{v} f(s, v).
+\]
+
+Since \( f(s, v) \) is an integer for each \( v \), \( |f| \) is also an integer.
 \end{document}
