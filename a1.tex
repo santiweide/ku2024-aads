@@ -191,8 +191,24 @@ $Q.E.D.$
 \section{26.1-7}
 
 \section{26.2-2}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午8.46.37.png}
+    \caption{26.1(b)}
+    \label{fig:enter-label}
+
+\end{figure}
+Calculated in accordance with CLRS formulas 26.9 and 26.10.
+
+\[f(S, T) = \sum_{u \in S} \sum_{v \in T} f(u, v) - \sum_{u \in S} \sum_{v \in T} f(v, u)\]
+\[c(S, T) = \sum_{u \in S} \sum_{v \in T} c(u, v)\]
+
+\[f(S, T) = f(s,v1)+f(v2,v1)+f(v4,v3)+f(v4,t) - f(v3,v2) = 11+1+7+4-4=19\]
+\[c(S, T) = c(s,v1)+c(v2,v1)+c(v4,v3)+c(v4,t)=16+4+7+4=31\]
 \section{26.2-4}
 %zhigao
+
+\section{26.2-3}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午8.43.56.png}
@@ -218,21 +234,6 @@ Then updated the residual network:
 \[s \rightarrow v2: 2, \quad v2 \rightarrow v4: 3, \quad v4 \rightarrow v3: 0 \quad v3 \rightarrow t: 1\]
 \[v2 \rightarrow s: 11, \quad v4 \rightarrow v2: 11, \quad v3 \rightarrow v4: 7 \quad t \rightarrow v3: 19\]
 At this point no other path can be found, so the total maximum flow is \(12+4+7=23\).
-\section{26.2-3}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午8.46.37.png}
-    \caption{26.1(b)}
-    \label{fig:enter-label}
-
-\end{figure}
-Calculated in accordance with CLRS formulas 26.9 and 26.10.
-
-\[f(S, T) = \sum_{u \in S} \sum_{v \in T} f(u, v) - \sum_{u \in S} \sum_{v \in T} f(v, u)\]
-\[c(S, T) = \sum_{u \in S} \sum_{v \in T} c(u, v)\]
-
-\[f(S, T) = f(s,v1)+f(v2,v1)+f(v4,v3)+f(v4,t) - f(v3,v2) = 11+1+7+4-4=19\]
-\[c(S, T) = c(s,v1)+c(v2,v1)+c(v4,v3)+c(v4,t)=16+4+7+4=31\]
 %zhigao
 \section{26.2-7}
 Firstly, I need to check the capacity constraint.\\
