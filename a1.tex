@@ -18,8 +18,8 @@
 \author{Author \\
   Wanjing Hu / fng685@alumni.ku.dk  \\
   Zhigao Yan / sxd343@alumni.ku.dk  \\
-  Wanjing Hu / fng685@alumni.ku.dk  \\
-  Wanjing Hu / fng685@alumni.ku.dk  \\
+  Wenshuo Dong / gnj461@alumni.ku.dk  \\
+  Jiayi Zhang / TODO@alumni.ku.dk  \\
 } 
  
 
@@ -258,7 +258,37 @@ Then the $f'$ we constructed is a valid maximum flow. And thus we have $|V'| = 2
 
 
 \section{26.2-2}
-\section{26.2-4}
+%wanjing
+\textbf{Question: }
+In Figure $\text{26.1}$(b), what is the flow across the cut $(\{s, v_2, v_4\}, \{v_1, v_3, t\})$? What is the capacity of this cut?
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午8.46.37.png}
+    \caption{26.1(b)}
+    \label{fig:enter-label}
+
+\end{figure}
+\textbf{Answer}
+
+Flow across the cut:
+\begin{equation}
+\begin{aligned}
+&f(S,T)=\sum_{u \in S} \sum_{v \in T} f(u,v) - \sum_{u \in S} \sum_{v \in T} f(v, u)  \\
+&=f(s,v_1) + f(v_2,v_1)+f(v_4,v_3)+f(v_4,t) - f(v_3,v_2)\\
+&=11+1+4+7-4\\
+&=19
+\end{aligned}
+\end{equation}
+
+Capacity of the cut:
+
+ $C(S,T)=\sum_{u \in S} \sum_{v \in T} c(u,v) = c(s,v_1) + c(v_2,v_1) + c(v_4,v_3) + c(v_4,t) = 31$
+
+\section{26.2-3}
+\textbf{Question:} Show the execution of the Edmonds-Karp algorithm on the flow network of Figure 26.1(a).
+
+\textbf{Answer: }
 %zhigao
 \begin{figure}[h]
     \centering
@@ -285,44 +315,107 @@ Then updated the residual network:
 \[s \rightarrow v2: 2, \quad v2 \rightarrow v4: 3, \quad v4 \rightarrow v3: 0 \quad v3 \rightarrow t: 1\]
 \[v2 \rightarrow s: 11, \quad v4 \rightarrow v2: 11, \quad v3 \rightarrow v4: 7 \quad t \rightarrow v3: 19\]
 At this point no other path can be found, so the total maximum flow is \(12+4+7=23\).
-\section{26.2-3}
+
+
+\section{26.2-4}
+\textbf{Question}
+In the example of Figure 26.6, what is the minimum cut corresponding to the maximum flow shown? Of the augmenting paths appearing in the example, which one cancels flow?
+\begin{figure}[htbp]
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{26.6.1.png}
+    \caption{26.6(1)}
+    \label{fig:26.6(1)}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{26.6.2.png}
+    \caption{26.6(2)}
+    \label{fig:26.6(2)}
+        \end{minipage}%
+\end{figure}
+
+
+\textbf{Answer}
+Since the max flow value is $|f| = 11+12 = 23$, and $23 = 12 + 7 + 4 = c(v_1,v_3) + c(v_4,v_3) + c(v_4,t)$, thus the min cut is $S={s,v_1,v_2,v_4}, T={v_3,t}$
+
+(c) canceled a flow from $v_2$ to $v_1$.
+
+\section{26.2-7}
+% TODO ask on the exercise class!!!
+\textbf{Question: }
+Prove Lemma 26.2. Let $G=(V,E)$ be a flow network, let $f$ be a flow in $G$, and let $p$ be an augmenting path in $G_f$. Define a function $f_p: V \times V -> \mathbb R$ by 
+\begin{equation}
+\begin{aligned}
+f_p(u,v) = 
+\begin{cases}
+c_f(p) & \mbox if(u,v) is \quad on \quad p\\
+0 & \mbox otherwise
+\end{cases}
+\end{aligned}
+\end{equation}
+where $c_f(p) = min\{c_f(u,v) : (u,v) \quad is \quad on \quad p\}$
+
+\textbf{Answer}
+
+\subsection{Proof of flow - capacity constraints}
+ For all $(u,v) \in E$, when $f(u,v)$ is on $p$, we have $f_p(u,v) <= c_f(p) <= c(u,v)$; otherwise $f(u,v) = 0 < = c(u,v)$. Also we have $f_p(u,v) >= 0$. So The capacity constraints is satisfied.
+
+\subsection{Proof of flow - flow conservation}
+
+For each vertex in V, the flow in is either $c_f(p) $ or 0, and so is the flow out.
+
+\subsection{Proof of flow value}
+The only net flow from s is the initial edge along the path, so $|f_s| = c_f(p) $.
+
+\section{26.2-9}
+\textbf{Question}
+Suppose that both $f$ and $f_0$ are flows in a network $G$ and we compute flow $f \uparrow f_0$. Does the augmented flow satisfy the flow conservation property? Does it satisfy the capacity constraint?
+
+\subsection{Proof - not obeying capacity constraints}
+Let the flow network $G$ have only a source $s$ and a sink $t$, and $c(s,t) = 1$. Let the flows $f$ and $f'$ be $f(x,t) = f'(s,t) = 1$. Then $(f \uparrow f')(s,t) = 2 >1 = c(s,t)$.
+
+\subsection{Proof - flow conservation}
+When $(u,v) \in E$, we have $(v,u) \notin E$ and $f'(v,u) = 0$. Thus we can rewrite the flow as:
+
+\begin{equation}
+(f \uparrow f')(u,v) = 
+\begin{cases}
+f(u,v) + f'(u,v) &\mbox if (u,v) \in E\\
+0 &\mbox otherwise
+\end{cases}
+\end{equation}
+
+Let $u \notin \{s,t\}$, and $u \in V$. Then
+
+\begin{equation}
+\begin{aligned}
+&\sum_{v \in V} (f \uparrow f')(v,u)\\
+&=\sum_{v \in V} f(v,u) + \sum_{v \in V} f'(v,u)\\
+&=\sum_{v \in V} f(u,v) + \sum_{v \in V} f'(u,v)\\
+&=\sum_{v \in V} (f(u,v) + f''(u,v))\\
+&=\sum_{v \in V} (f \uparrow f')(u,v)\\
+\end{aligned}
+\end{equation}
+
+
+\section{26.3-2}
+\textbf{Question}
+Prove Theorem 26.10 (Integrality theorem):
+If the capacity function c takes on only integral values, then the maximum flow f produced by the Ford-Fulkerson method has the property that $|f|$ is an integer. Moreover, for all vertices $u$ and $v$, the value of $f(u,v)$ is an integer.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\linewidth]{截屏2024-11-18 下午8.46.37.png}
-    \caption{26.1(b)}
-    \label{fig:enter-label}
+    \includegraphics[width=\linewidth]{26.3.2}
+    \caption{26.3.2}
+    \label{fig:ford-fulkerson}
 
 \end{figure}
-Calculated in accordance with CLRS formulas 26.9 and 26.10.
+\textbf{Answer}
+We prove by Induction.
+\textbf{First iteration} Since $c$ only takes on integer values and $(c,u) . f$ is set to 0, then $c_f$ only takes on integer values. Thus line 7 and line 8 will both return an Integer.
 
-\[f(S, T) = \sum_{u \in S} \sum_{v \in T} f(u, v) - \sum_{u \in S} \sum_{v \in T} f(v, u)\]
-\[c(S, T) = \sum_{u \in S} \sum_{v \in T} c(u, v)\]
+\textbf{$n^{th}$ condition: } Assume $(u,v).f \in \mathbb Z$ for all $(u,v)$ after the $n^{th}$ iteration. Then. for the $(n+1)^{th}$ iteration, $c_f(p)$ is set to the minmum of $c_f(u,v)$, which is an integer. So after line 7 or line 8 there will also be an Integer.
 
-\[f(S, T) = f(s,v1)+f(v2,v1)+f(v4,v3)+f(v4,t) - f(v3,v2) = 11+1+7+4-4=19\]
-\[c(S, T) = c(s,v1)+c(v2,v1)+c(v4,v3)+c(v4,t)=16+4+7+4=31\]
-%zhigao
-\section{26.2-7}
-Firstly, I need to check the capacity constraint.\\
-We know that : \(c_f(p) = \min \{ c_f(u, v) : (u, v) \text{ is on } p \}\)
-Hence we have the following:
-\[c_f(p) \leq c_f(u, v) \quad \forall (u, v) \in p.\]
-So the capacity constraint is satisfied.\\
-Then check the flow conservation.\\
-We know the \(p\) is an augmenting path, And from the definition:
-\[f_p(u, v) =
-\begin{cases} 
-c_f(p), & \text{if } (u, v) \text{ is on } p, \\ 
-0, & \text{otherwise}.
-\end{cases}\]
-Assume that \(w\) is an output point and that \(w \in p\), Hence:
-\[f_p(v, w) = c_f(p)\]
-So we get: 
-\[\sum_{u \in p} f_p(u, v) =\sum_{w \in p} f_p(v, w)\]
-The flow conservation is satisfied.\\
-By the definition of the augmenting path, the maximum amount by which we can increase the flow on each edge in an augmenting path is the residual capacity of \(p\).
-So the flow on each edge is \(c_f(p)\), so \( |f_p| = c_f(p)> 0\)
-%zhigao
-\section{26.2-9}
-\section{26.3-2}
+Q.E.D.
 
 \end{document}
