@@ -104,30 +104,30 @@ E(d(x)) &= \sum_{k=1}^{n-1} 2/k\\
 Since we have:
 \begin{equation}
 \begin{aligned}
-\int_{1}^{n-1} \frac{1}{x} dx = ln(n-1)
+\int_{1}^{n-1} \frac{1}{x} dx = log(n-1)
 \end{aligned}
 \end{equation}
 
 So we have
 \begin{equation}
 \begin{aligned}
-E[d(x)] &<= 2*(1 + ln(n-1))\\
-E[d(x)] &>= 2(*ln(n-1))
+E[d(x)] &<= 2*(1 + log(n-1))\\
+E[d(x)] &>= 2(*log(n-1))
 \end{aligned}
 \end{equation}
 
 That is:
 \begin{equation}
 \begin{aligned}
-E[d(x)] &<= 2*ln(n) + C\\
-E[d(x)] &>= 2*ln(n) - C
+E[d(x)] &<= 2*log(n) + C\\
+E[d(x)] &>= 2*log(n) - C
 \end{aligned}
 \end{equation}
 
 So we have
 \begin{equation}
 \begin{aligned}
-E[d(x)] = \Theta(ln(n))\\
+E[d(x)] = \Theta(log(n))\\
 \end{aligned}
 \end{equation}
 
