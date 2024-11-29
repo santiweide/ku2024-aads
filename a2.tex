@@ -58,7 +58,7 @@ Then the linear programming problem could be defined as follows:
 maximize& \\
 & \sum_{v \in L} f_{(s,v)}\\
 subject \, to&  \\
-& f_{(u,v)} <=1 \, for \, each \, u,v \in \{s\} \cup L \cup R \cup \{t\} = V\\
+& f_{(u,v)} <=1 \, for \, each \, u,v \in \{s\} \cup L \cup R \cup \{t\} = V\\ 
 & \sum_{v \in V} f_{(v,u)} = \sum_{v \in V} f_{(u,v)} \, for \, each \, u \in L \cup R\\
 &f_{(u,v)} >= 0 \, for \,each \, u,v \in V
 \end{aligned}
@@ -72,6 +72,37 @@ Write down the dual of the maximum-flow linear program, as given in lines
 (29.47)–(29.50) on page 860. Explain how to interpret this formulation as a
 minimum-cut problem.\\
 \textbf{Answer:}
+Firstly, I need to convert the original formulas to standard form.
+We can set a coefficient C that is 1 when \(u=s\) and -1 when \(v=s\).
+\[
+\begin{aligned}
+maximize& \\
+&\sum_{u,v \in V} Cfuv, \\
+subject \, to& \\
+&f_{uv} \leq c(u, v), \quad \text{for each } u, v \in V, \\
+&\sum_{v \in V} f_{vu} = \sum_{v \in V} f_{uv}, \quad \text{for each } u \in V \setminus \{s, t\}, \\
+&f_{uv} \geq 0, \quad \text{for each } u, v \in V.
+\end{aligned}
+\]
+The second formula can be changed to 
+\[
+\sum_{v \in V} f_{vu} - \sum_{v \in V} f_{uv} \leq 0 \quad \text{for each } u \in V \setminus \{s, t\}
+\]
+\[-\sum_{v \in V} f_{vu} + \sum_{v \in V} f_{uv} \leq 0\ \quad \text{for each } u \in V \setminus \{s, t\}\]
+Now we can get the dual subject function by the subject function, for capacity constraints and flow conservation, \(y_{uv}\), \(y_u\)(flow conservation for \(u\)) and \(y_v\)(flow conservation for \(v\))can be introduced, 
+
+\[y_{uv}-y_u+y_v \geq C \quad \text{for each } u, v \in V\]
+We can split this equation into:
+\[y_{uv}-y_u+y_v \geq 0 \quad \text{for each } u, v \in V\setminus \{s, t\}\]
+\[y_{sv}+y_v \geq 1 \quad \text{for each } v \in V\setminus \{s\}\]
+\[y_{us}-y_u \geq -1 \quad \text{for each } u \in V\setminus \{s\}\]
+\[y_{uv} \geq 0, \quad y_u \geq 0,\quad y_v\geq 0\]
+The final object function is :
+\[minimize \quad \sum_{u,v \in V} c(u,v)y_{uv}\]
+From the object function, we can set \(y_{uv}\) as the variable for every edge, if one edge has been "cut", we need to add the capacity to the result. We can also think of \(y_u\) as the attribution of each point(without s and t). These constraints are to ensure that if two points belong to different sets, then edge \(uv\) must be cut.
+
+
+
 
 \section{Linear Programming - B}
 \textbf{Question:}
