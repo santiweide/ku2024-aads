@@ -172,6 +172,24 @@ E[d(x)] = \Theta(log(n))\\
 \textbf{Question}
 How many runs of randomized contraction do we need to be 99\% sure that a minimum cut is found?
 % zhigao
+\textbf{Answer}:
+Every time we run the randomized contraction, the probability of min-cut is returned is (n is the number of vectors in the graph):
+\[P\geq\frac{2}{n(n-1)}\]
+So the probability of min-cut is not returned is :
+\[P\geq1-\frac{2}{n(n-1)}\]
+By t times, this probability is :
+\[(1-\frac{2}{n(n-1)})^t\]
+We want to ensure 99\% that a minimum cut is found, Hence:
+\[(1-\frac{2}{n(n-1)})^t\leq0.01\]
+\[=tln(1-\frac{2}{n(n-1)})\leq ln(0.01)\]
+\[=t\leq \frac{ln(0.01)}{ln(1-\frac{2}{n(n-1)})}\]
+By using the \(1+x\leq e^x \rightarrow ln(1+x)\leq x\), we get:
+\[=t\leq \frac{ln(0.01)}{-\frac{2}{n(n-1)}}\]
+Finally, If we want to guarantee more than 99\% probability, then the number of times \(t\) needs to satisfy the following condition.
+\[
+t \geq \frac{4.605 \cdot n(n - 1)}{2}.
+\]
+
 
 \section{Randomized Algorithm-exercises 1.2}
 % wenshuo
