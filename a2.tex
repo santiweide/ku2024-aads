@@ -12,7 +12,7 @@
 
 
 
-\title{Assignment 1}
+\title{Assignment 2}
 
 
 \author{Author \\
@@ -28,7 +28,21 @@
 
 \section{29.1-9}
 % wenshuo 
+\[
+\begin{aligned}
+maximize& \\
+& z = 3x_1 + 2x_2 \\
+subject \, to&  \\
+& x_1 - x_2 \leq 66, \\ 
+& x_1 + x_2 \geq 77,\\
+& x_1, x_2 \geq 0.
+\end{aligned}
+\]
 
+The feasible region is unbounded because there is no constraint explicitly limiting \(x_1\) and \(x_2\) from growing indefinitely in certain directions.
+For example, \(x_1 \to \infty\) and \(x_2 \to \infty\) is possible as long as the constraints are satisfied.
+
+Despite the feasible region being unbounded, the objective function \(z = 3x_1 + 2x_2\) does not increase indefinitely. The key limiting constraint is \(x_1 - x_2 \leq 66\), which ensures that \(x_1\) and \(x_2\) cannot grow disproportionately. The optimal value occurs where the constraints intersect.
 \section{29.2-3}
 % jiayi
 
@@ -108,6 +122,28 @@ From the object function, we can set \(y_{uv}\) as the variable for every edge, 
 \textbf{Question:}
 Write an LP in standard form in the plane so that: (1) the feasible region is a convex polygon with 5 edges, (2) the maximum of the LP is 1 and (3) the maximum is achieved on a full edge of the feasible region (and not just a single vertex)
 % wenshuo
+
+\[
+\begin{aligned}
+Maximize& \\
+&z = x_1 + x_2, \\
+Subject \, to& \\
+& \quad x_1 \geq 0, \\
+& \quad x_2 \geq 0, \\
+& \quad x_1 + 2x_2 \leq 2, \\
+& \quad 2x_1 + x_2 \leq 2, \\
+& \quad x_1 - x_2 \leq 1.
+\end{aligned}
+\]
+
+
+The constraints define a convex polygon in the \(x_1\)-\(x_2\) plane. Each inequality corresponds to a half-space, and their intersection forms the feasible region. Since there are 5 constraints, the feasible region is bounded and consists of 5 edges.
+
+The objective function \(z = x_1 + x_2\) increases as \(x_1\) and \(x_2\) increase. The maximum value of \(z\) within the feasible region occurs where \(x_1 + x_2 = 1\), which is entirely contained within the feasible region. Thus, the maximum value is \(z = 1\).
+
+The edge of the feasible region defined by \(x_1 + x_2 = 1\) (subject to the constraints) is part of the feasible region. This ensures that the maximum value of \(z = 1\) is achieved along this edge, not just at a single vertex.
+
+The feasible region can be visualized as a convex polygon with vertices formed by solving the intersection of pairs of constraints. The line \(x_1 + x_2 = 1\) intersects this polygon along an entire edge where the maximum is achieved.
 
 \section{Linear Programming - C}
 \textbf{Question}
@@ -193,6 +229,23 @@ t \geq \frac{4.605 \cdot n(n - 1)}{2}.
 
 \section{Randomized Algorithm-exercises 1.2}
 % wenshuo
+\begin{enumerate}
+    \item Let \( G = (V, E) \) be the graph with \( n \) vertices and \( m \) edges. The minimum cut \( C_{\text{min}} \) is the smallest cut, i.e., the fewest edges that separate two disconnected sets of vertices.
+    
+    \item Instead of contracting an edge, we randomly select two vertices and merge them into a single vertex. This operation does not necessarily preserve the cut structure in the same way that edge contraction does.
+
+    \item In Karger's algorithm, each edge contraction preserves the structure of the minimum cut, while the modified algorithm may coalesce vertices in a way that disrupts the cut structure. Specifically, if two vertices from different parts of the min-cut are merged, the cut structure is altered, making it more difficult to find the actual minimum cut in future steps.
+
+    \item Suppose the minimum cut consists of \( k \) edges separating two distinct sets of vertices. Each time we randomly choose two vertices to merge, there is a probability that we merge vertices from different sets of the cut, which disturbs the min-cut structure.
+    
+    The probability that we make an appropriate choice that preserves the minimum cut structure decreases with each step. After a number of coalescences, the algorithm may have merged vertices in such a way that the min-cut is no longer detectable.
+
+    \item In Karger's algorithm, the probability of failure after \( O(n^2) \) edge contractions is small, specifically \( O(1/n^2) \). However, in the modified algorithm, each coalescence step is less efficient because it does not directly focus on the cut structure. As a result, the number of steps required to find a valid min-cut may increase, and the probability of success becomes exponentially small in \( n \).
+
+    \item After \( O(n^2) \) steps, the probability of finding the min-cut may be exponentially small. The reason is that each random selection of two vertices has a probability of failing to preserve the cut, and this failure accumulates exponentially over time.
+\end{enumerate}
+
+
 
 \section{Randomized Algorithm-exercises 1.3}
 %you may assume that T(n) is the worst case running time of A.
