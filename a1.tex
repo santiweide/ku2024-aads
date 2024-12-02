@@ -31,7 +31,7 @@
 %wanjing
 \textbf{Question: }Show that splitting an edge in a flow network yields an equivalent network. More formally, suppose that flow network $G$ contains edge $(u, v)$, and we create a new flow network $G'$ by creating a new vertex $x$ and replacing $(u, v)$ by new edges $(u, x)$ and $(x, v)$ with $c(u, x) = c(x, v) = c(u, v)$. Show that a maximum flow in $G'$ has the same value as a maximum flow in $G$.
 
-\textbf{Answer: }As noted in the Question, we have $G'=(V',E')$ where $V'=V\cup{x}$, $E'=E-{(u,v)}\cup{(u,x), (v, x)}$.
+\textbf{Answer: }As noted in the Question, we have $G'=(V',E')$ where $V'=V\cup \{x\}$, $E'=E-\{(u,v)\}\cup\{(u,x), (v, x)\}$.
 
 First we should have a flow in $G'$ that is both a flow and a maximum flow. Construct $f'$ in $G'$ as follows:
 \begin{equation}
@@ -127,6 +127,10 @@ For the second case, we have $x$ not connected to $s$ or $t$. Then we can prove 
  \end{equation}
 
 As all above, the proof is done. We also notice that we did not make use of the feature that $f$ is a maximum flow in $G$, so for all the flows the $|f'| =|f|$ hold.
+
+%%% TODO
+%You only proved that for each f you can construct such f', which means maxflow(G')>=maxflow(G). What about the other direction?
+
 
 $Q.E.D.$
 \section{26.1-4}
