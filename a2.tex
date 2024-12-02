@@ -163,24 +163,36 @@ For any given key $x$ in $S$, let $d(x)$ be the depth of $x$ in the search tree 
 
 %Let $S$ be the set of the $n$ keys, and n us the total number of S. Let i be the number of elements smaller than x, then there are $n-i-1$ numbers greater than x. The probability of x being in level k has two cases: when x is the left child of its father, the father is greater than x, and when x is the right child of the father, the father is smaller than x.
 
-Let S be a sorted set of the original number, and we focus on S(x) meaning the x-th largest number in S. Then P(d(S(x))==i) = P(d(father) == i-1) * P(S(x) is selected as the pivot) = P(d(father) == i-1) * 1/(n-i). When the father is smaller than x, 
+Let S be a sorted set of the original number, and we focus on S(x) meaning the x-th largest number in S. Then P(d(S(x))==i) = P(d(father) == i-1) * P(S(x) is selected as the pivot) = P(d(father) == i-1) * 1/(n-i). When the father is smaller than x. Let k be the total levels of the tree, then $2^{k-1} < n <=2^{k}$, and we have
 
 \begin{equation}
 \begin{aligned}
 P(d(S(x))==i) &= 2^{i-1}/n\\
-&1<=i <= log(n)
+&1<=i <= k
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-E(d(x)) &= \sum_{i=1}^{log(n)}  i*2^{i-1}/n\\
-&=\sum_{i=1}^{k}  i*2^{i-k-1}, n = 2^k\\
+E(d(x)) &= \sum_{i=1}^{k}  i*2^{i-1}/n\\
+&<=\sum_{i=1}^{k}  i*2^{i-k-1}\\
 &=2^{-k}\sum_{i=1}^{k}i*2^{i-1}\\
 &=2^{-k}*(1+(k-1)*2^k)\\
-&=1/n + log(n) - 1
+&<=1/n + log(n) - 1
 \end{aligned}
 \end{equation}
+
+Also we have
+\begin{equation}
+\begin{aligned}
+E(d(x)) &= \sum_{i=1}^{k}  i*2^{i-1}/n\\
+&>\sum_{i=1}^{k-1}  i*2^{i-k-1-1}\\
+&=2^{-k-1}\sum_{i=1}^{k-1}i*2^{i-1}\\
+&=2^{-k-1}*(1+(k-2)*2^(k-1))\\
+&>=1/2*(1/n + 1/2*(log(n)-2))
+\end{aligned}
+\end{equation}
+
 
 So we have
 \begin{equation}
