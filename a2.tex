@@ -159,40 +159,26 @@ For any given key $x$ in $S$, let $d(x)$ be the depth of $x$ in the search tree 
 
 % wanjing
 \textbf{Answer}
-Let $S$ be the set of the $n$ keys, then for $x,y \in S$ the comparison between $x$ and $y$ will occur when $x$ and $y$ are in the same subproblem during the step of a recursion, and one of them is chosen as a pivot. For any pair $(x,y)$, we note the probability that $x$, $y$ are in the same subproblem as $A$. Then we have:
 
-\begin{equation}
-P(A) = 2/n
-\end{equation}
-Also, from the definition of $d(x)$ we can see $d(x)$ equals to the number of comparisons involving $x$ during the partition process. Then we have 
+
+%Let $S$ be the set of the $n$ keys, and n us the total number of S. Let i be the number of elements smaller than x, then there are $n-i-1$ numbers greater than x. The probability of x being in level k has two cases: when x is the left child of its father, the father is greater than x, and when x is the right child of the father, the father is smaller than x.
+
+Let S be a sorted set of the original number, and we focus on S(x) meaning the x-th largest number in S. Then P(d(S(x))==i) = P(d(father) == i-1) * P(S(x) is selected as the pivot) = P(d(father) == i-1) * 1/(n-i). When the father is smaller than x, 
 
 \begin{equation}
 \begin{aligned}
-E(d(x)) &= \sum_{k=1}^{n-1} 2/k\\
-&= 2*(1 + 1/2 + 1/3 + ... + 1/n-1)
+P(d(S(x))==i) &= 2^{i-1}/n\\
+&1<=i <= log(n)
 \end{aligned}
 \end{equation}
 
-Since we have:
 \begin{equation}
 \begin{aligned}
-\int_{1}^{n-1} \frac{1}{x} dx = log(n-1)
-\end{aligned}
-\end{equation}
-
-So we have
-\begin{equation}
-\begin{aligned}
-E[d(x)] &<= 2*(1 + log(n-1))\\
-E[d(x)] &>= 2(*log(n-1))
-\end{aligned}
-\end{equation}
-
-That is:
-\begin{equation}
-\begin{aligned}
-E[d(x)] &<= 2*log(n) + C\\
-E[d(x)] &>= 2*log(n) - C
+E(d(x)) &= \sum_{i=1}^{log(n)}  i*2^{i-1}/n\\
+&=\sum_{i=1}^{k}  i*2^{i-k-1}, n = 2^k\\
+&=2^{-k}\sum_{i=1}^{k}i*2^{i-1}\\
+&=2^{-k}*(1+(k-1)*2^k)\\
+&=1/n + log(n) - 1
 \end{aligned}
 \end{equation}
 
