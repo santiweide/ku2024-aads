@@ -45,6 +45,22 @@ For example, \(x_1 \to \infty\) and \(x_2 \to \infty\) is possible as long as th
 Despite the feasible region being unbounded, the objective function \(z = 3x_1 + 2x_2\) does not increase indefinitely. The key limiting constraint is \(x_1 - x_2 \leq 66\), which ensures that \(x_1\) and \(x_2\) cannot grow disproportionately. The optimal value occurs where the constraints intersect.
 \section{29.2-3}
 % jiayi
+\textbf{Question:}
+In the single-source shortest-paths problem, we want to find the shortest-path weights from a source vertex $s$ to all vertices $v \in V $. Given a graph $G$, write a linear program for which the solution has the property that $d_{v}$ is the shortest-path weight from $s$ to $v$ for each vertex $v \in V$.
+
+\textbf{Answer:}
+To get the shortest-path weight from $s$ to $v$ for each vertex $v \in V$, the linear program will be:
+\begin{equation}
+\begin{aligned}
+maximize& \\
+& \sum_{v \in V} d_{v}\\
+subject \, to&  \\
+& d_{v} <=  d_{v} + w(v, u)\, for \, each \, u,v \in \{E\} \\
+& d_{s} = 0
+\end{aligned}
+\end{equation}
+The constraints are Similar to the shortest-path problem with only one destination $t$, the first constraint line ensures the path is correct while the second one gives a initial state of the problem.
+
 
 \section{29.2-6}
 % wanjing
@@ -149,9 +165,38 @@ The feasible region can be visualized as a convex polygon with vertices formed b
 \textbf{Question}
 This exercise demonstrates that LP can represent non-linearities (like absolute values). Let f be a function from the set {1,2} to the real numbers. 
 
-Write an LP whose value is $|f(1)|+|f(2)|$, and write the dual to this LP. In your solutions, all the entries in the matrix A and in the vectors b,c must be affine functions in $f(1)$ and $f(2)$; that is, each entry must be of the form $d f(1) + e f(2) + g$ where $d$,$e$,$g$ are real numbers. For example, in dimension n = 3, the vector b can be $(3 f(1), 0, -2f(2)+1)$ but not $(|f(1)|,0,0)$. 
+Write an LP whose value is $|f(1)|+|f(2)|$, and write the dual to this LP. In your solutions, all the entries in the matrix A and in the vectors b,c must be affine functions in $f(1)$ and $f(2)$; that is, each entry must be of the form $d f(1) + e f(2) + g$ where $d$,$e$,$g$ are real numbers. For example, in dimension n = 3, the vector b can be $(3 f(1), 0, -2f(2)+1)$ but not $(|f(1)|,0,0)$. \\
 % jiayi
+\textbf{Answer:}
+To express the absolute value  $|f(1)|$ and $|f(2)|$,  we import $x$ and $y$ where $x  \geq|f(1)|$ and $y  \geq|f(2)|$ , so the corresponding constraints are: $x \geq f(1), x \geq -f(1), y \geq f(2), y \geq -f(2)$.\\
+For convenience, the objective function will be defined as:
+$z = x + y$ and the final question will be convert to:\\
+\begin{equation}
+\begin{aligned}
+minimize& \\
+& z = x + y\\
+subject \, to&  \\
+& x \geq f(1)\\
+& x \geq -f(1)\\
+& y \geq f(2)\\
+& y \geq -f(2)\\
+& x\geq 0, y \geq 0\\
+\end{aligned}
+\end{equation}
 
+To get the dual to the LP,  the minimize need to be convert to the maximize, and $Ax \geq b$ also need to be convert to $A^Ty \leq c$.
+
+The dual is:
+\begin{equation}
+\begin{aligned}
+maximize& \\
+& z = f(1)(y_{1} - y_{2}) + f(2)(y_{3} - y_{4}) \\
+subject \, to&  \\
+& y_{1} + y_{2} \leq 1\\
+& y_{3} + y_{4} \leq 1\\
+& y_{i}\geq 0, 1\leq y \leq 4\\
+\end{aligned}
+\end{equation}
 
 \section{Randomized Algorithm-1}
 \textbf{Question}
@@ -248,5 +293,9 @@ t \geq \frac{4.605 \cdot n(n - 1)}{2}.
 \section{Randomized Algorithm-exercises 1.3}
 %you may assume that T(n) is the worst case running time of A.
 % jiayi
-
+\textbf{Question:}
+Exercise 1.3: Consider a Monte Carlo algorithm $A$ for a problem $\Pi$ whose expected running time is at most $T(n)$ on any instance of size $n$ and that produces a correct solution with probability $\gamma(n)$. Suppose further that given a solution to $\Pi$, we can verify its correctness in time $t(n)$. Show how to obtain a Las Vegas algorithm that always gives a correct answer to $\Pi$ and runs in expected time at most $(T(n) + t(n))/\gamma(n)$.\\
+\textbf{Answer:}
+To convert the Monte Carlo algorithm which may get a wrong answer in a fixed time to a Las Vegas algorithm which always get the correct answer in a uncertain time period, we need to verify the correctness and retry the Monte Carlo algorithm until we get the correct answer.\\
+For every time we run the Monte Carlo algorithm and verify the answer, it need $T(n) + t(n)$ time and the probability that the answer is correct is $\gamma(n)$. So according to the property of geometrically distributed, the final expected time that the Las Vegas algorithm get the correct answer to $\Pi$ will be $(T(n) + t(n))/\gamma(n)$.
 \end{document}
