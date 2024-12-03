@@ -111,6 +111,36 @@ Where $|S|$ is the size of set S.
 \textbf{Question: }
 Argue that if $h: U \rightarrow [m]$ is c-approximately strong universal, then h is also c-approximately universal.
 
+\textbf{Answer}
+The collision probability of the c-approximately strong universal is 
+
+\begin{equation}
+\begin{aligned}
+&Pr[h(x)=h(y)] \\
+&= \sum_{q \in [m]} Pr[h(x) = q \, and \, h(y) = q]\\
+&= \sum_{q \in [m]} Pr[h(x) = q \, and \, h(y) = h(x)]\\
+&=\sum_{q \in [m]} Pr[h(x) = q] * Pr[h(y) = h(x)]\\
+&=\sum_{q \in [m]} Pr[h(x) = q] *1/m
+\end{aligned}
+\end{equation}
+
+For the last equation we use the independency property of c-approximately universal. And we also have:
+\begin{equation}
+\begin{aligned}
+Pr[h(x) = q] &<= \frac{c}{m} \\
+\end{aligned}
+\end{equation}
+
+So we have
+\begin{equation}
+\begin{aligned}
+&Pr[h(x)=h(y)] \\
+&= \sum_{q \in [m]} Pr[h(x) = q] * 1/m\\
+&<=\sum_{q \in [m]}   \frac{c}{m^2}
+= \frac{c}{m}
+\end{aligned}
+\end{equation}
+
 \section{Hashing-3.4*}
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
 %zhigao
