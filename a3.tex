@@ -28,7 +28,20 @@
 % The ones marked * are the hard, and will get larger weight.
 
 \section{Hashing-2.1}
+\textbf{Question: } Is the truly independent hash function h : U $\rightarrow$ [m] universal?
 %wanjing
+
+Yes. 
+
+Our reason is that for truly independent hash function, for any input $x_i \in U$, $i = 1,2,...,n$, the outputs $h(x_i)$ are completely independent and uniformly distributed over $[m]={0,1,...,m-1}$. Assume we are picking the value $k$ such that $h(x)=k$ , then we have
+
+\begin{equation}
+\begin{aligned}
+\mathop{Pr} \limits_{h} [h(x)=k] \leq \frac{1}{m}\\
+\mathop{Pr} \limits_{h} [h(y)=k] \leq \frac{1}{m}\\
+\end{aligned}
+\end{equation}
+That is $Pr[h(x)=h(y)] \leq \frac{1}{m}$. So the truly independent hash function h : U $\rightarrow$ [m] is universal.
 
 \section{Hashing-2.2}
 %zhigao
@@ -42,6 +55,46 @@
 
 \section{Hashing-2.5*}
 %wanjing
+\textbf{Question: }
+With $s: U \rightarrow [n^3]$ and $h : U \rightarrow [n]$ independent universal hash functions, for a given $x \in U \backslash S$, what is the probability of a false positive when we search $x$, that is, what is the probability that there is a key $y \in S$ such that $h(y) = h(x)$ and $s(y) = s(x)$?
+
+\textbf{Answer}
+
+Now we have:
+\begin{equation}
+\begin{aligned}
+\mathop{Pr} \limits_{h} [h(x)=h(y)] &= \frac{1}{n}\\
+\mathop{Pr} \limits_{s} [s(x)=s(y)] &= \frac{1}{n^3}
+\end{aligned}
+\end{equation}
+
+And we want to know about:
+\begin{equation}
+\begin{aligned}
+&\mathop{Pr}  [False \, Positive]\\
+&= Pr[\exists y \in S \, such \, that \, h(y) = h(x) \, and \, s(y) = s(x)]\\
+&<= \sum_{y \in S} Pr[h(x)=h(y) \, and \, s(y)=s(x)]
+\end{aligned}
+\end{equation}
+
+The inequality is a union bound, that the probability of that at least one of multiple events happen is at most the sum of their probabilities(reference to the hashing material provided in class). Since h and s are independent, for any single $y \in S$ we have:
+\begin{equation}
+\begin{aligned}
+&\mathop{Pr} [h(x)=h(y) \, and \, s(y)=s(x)] \\
+&\mathop{Pr} [h(x)=h(y)] * \mathop{Pr} \limits_{h,s} [s(x)=s(y)] \\
+&= \frac{1}{n^4}
+\end{aligned}
+\end{equation}
+
+So we have
+\begin{equation}
+\begin{aligned}
+&\mathop{Pr}  [False \, Positive]\\
+&<= |S|/n^4
+\end{aligned}
+\end{equation}
+
+Where $|S|$ is the size of set S.
 
 \section{Hashing-2.6*}
 %zhigao
@@ -55,6 +108,8 @@
 \section{Hashing-3.3* }
 % you must prove that the collision probability is at most c/m. It is not sufficient to prove c²/m
 %wanjing
+\textbf{Question: }
+Argue that if $h: U \rightarrow [m]$ is c-approximately strong universal, then h is also c-approximately universal.
 
 \section{Hashing-3.4*}
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
