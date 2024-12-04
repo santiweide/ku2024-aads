@@ -301,6 +301,22 @@ Overall, the algorithm runs in polynomial time because the DFS and path length c
 \textbf{Question}
 Let $\phi$ be a boolean formula constructed from the boolean input variables $x_1, x_2, \dots, x_k$, negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$), and parentheses. The formula $\phi$ is a \textit{\textbf{tautology}} if it evaluates to $1$ for every assignment of $1$ and $0$ to the input variables. Define $TAUTOLOGY$ as the language of boolean formulas that are tautologies. Show that $TAUTOLOGY \in co-NP$.
 
+\textbf{Answer}
+To verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP$.
+
+\subsection{Certificate}
+The certificate for $\overline{TAUTOLOGY}$ is the assignment $(x_1,x_2,...,x_k) \in {0,1}^k$ such that $\phi(x_1,x_2,...,x_k) = 0$.
+
+\subsection{Verifier}
+The verifier is defined as follows:
+
+\textbf{Step1} Substitute each $x_i$ in $\phi$ with the corresponding value in the certificate.
+
+\textbf{Step2} Evaluate based on the negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$), and parentheses, which costs polynomial time in the size of $\phi$.
+
+\textbf{Step3} Check if the result of the evaluation is 0, which would be accepted. Otherwise it will be rejected. 
+
+Since the complexity is polynomial time in the size of $\phi$, $\overline{TAUTOLOGY} \in NP$.
 
 \section{Complexity-34.3-2}
 %zhigao
