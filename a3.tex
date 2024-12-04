@@ -276,6 +276,20 @@ Overall, the algorithm runs in polynomial time because the DFS and path length c
 
 \section{Complexity-34.1-5}
 %zhigao
+\textbf{Question:} Show that if an algorithm makes at most a constant number of calls to polynomial-time subroutines and performs an additional amount of work that also takes polynomial time, then it runs in polynomial time. Also show that a polynomial number of
+calls to polynomial-time subroutines may result in an exponential-time algorithm.\\
+\textbf{Proof:}\\
+For a polynomial-time subroutine, the running time is \(O(n^k)\), and if an algorithm calls it a constant number \(c\) times and does an additional amount of polynomial-time work, the total running time of this algorithm is:
+\[T(n) = c \cdot O(n^k) + O(n^x)\]
+\[T(n) = O(n^{\max(k,x)}) \]
+So this algorithm is also running in polynomial time. \\
+For the second question, consider every time the algorithm calls the polynomial-time subroutines, we have \(n->n^2\), and we set the algorithm calls the polynomial-time subroutines \(n\) (polynomial number) times.
+Hence the total running time of this algorithm is:
+\[T(n) = O(n) + O(n^2) + ...+O(n^{2n-1}) + O(n^x) \]
+\[T(n) \in O(n^{2^n})\]
+That is an exponential-time algorithm.
+
+
 
 \section{Complexity-34.2-5}
 %wenshuo
@@ -307,6 +321,22 @@ Since the complexity is polynomial time in the size of $\phi$, $\overline{TAUTOL
 
 \section{Complexity-34.3-2}
 %zhigao
+\textbf{Question:} Show that the \(\leq_P\) relation is a transitive relation on languages. That is, show that if \(L_1 \leq_PL_2 \) and \(L_2\leq_P L_3\), then \(L_1\leq_P L_3\). \\
+\textbf{Proof:}\\
+For \(L_1 \leq_PL_2 \) and \(L_2\leq_P L_3\), we have:
+\[x \in L_1 \iff f_1(x) \in L_2\]
+\[x \in L_2 \iff f_2(x) \in L_3\]
+So we can define a function that is \(f_2(f_1(x))\), hence:
+\[x \in L_1 \iff f_2(f_1(x)) \in L_3\]
+Now we need to verify this function can be run in polynomial time.
+The total runtime for this function is:
+\[T_1(n)+T_2(T_1(n))\]
+\(T_1(n)\) and \(T_2(n)\) are polynomial-time, so the total runtime is also polynomial-time.
+
+
+
+
+
 
 \section{Complexity-34.3-3}
 %wenshuo
