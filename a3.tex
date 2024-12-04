@@ -44,6 +44,11 @@ Our reason is that for truly independent hash function, for any input $x_i \in U
 That is $Pr[h(x)=h(y)] \leq \frac{1}{m}$. So the truly independent hash function h : U $\rightarrow$ [m] is universal.
 
 \section{Hashing-2.2}
+\textbf{Question:} If a hash function h : U → [m] has collision probability 0, how large must m be?
+
+The collision probability is 0 which means:
+\[\mathop{Pr} \limits_{h}[h(x)=h(y)] =0\]
+So, the minimum size of m should be equal to \(|U|\), in other words \(|m|\geq|U|\)
 %zhigao
 
 \section{Hashing-2.3}
@@ -97,6 +102,43 @@ So we have
 Where $|S|$ is the size of set S.
 
 \section{Hashing-2.6*}
+\textbf{Question:}
+Suppose we for our hash function also consider a = 0, that is, for random \((a, b)\in[p]^2\), we define the hash function \(h_{a,b} : [p] \rightarrow [m]\) by
+\[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m}\]
+
+(a) Show that this function may not be universal.\\
+
+
+For this question, I need to show that in some cases:
+\[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] > 1/m\]
+Consider a = 0, we can get:
+\[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m} = (b\mod{p} )\mod{m}\]
+In that case:
+\[h_{0,b}(x) = (b\mod{p} )\mod{m}\]
+\[h_{0,b}(y) = (b\mod{p} )\mod{m}\]
+we can see the value of \(h_{a,b}(x)\) is only depending on b, and the collision probability is 1.\\
+\\
+(b) Prove that it is always 2-approximately universal, that is, for any distinct \(x, y \in [p]\), 
+\[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] < 2/m\]
+
+
+From the previous proof, we know that when \(a \neq 0\):
+\[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] < 1/m\]
+And the probability of \(a \neq 0\) is \(\frac{p-1}{p}\).
+So we can calculate the probability of two cases:
+\[
+Pr[h_{a,b}(x) = h_{a,b}(y)] = Pr[a = 0] \cdot 1 + Pr[a \neq 0] \cdot \frac{1}{m}.
+\]
+\[
+Pr[h_{a,b}(x) = h_{a,b}(y)] = \frac{1}{p} + \frac{p-1}{p} \cdot \frac{1}{m}.
+\]
+From the question we can get \(p>m\), Hence:
+\[\frac{1}{p} + \frac{p-1}{p} \cdot \frac{1}{m}<\frac{2}{m}\]
+Finally, Substitute into the inequality:
+\[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] < 2/m\]
+
+
+
 %zhigao
 
 \section{Hashing-3.1}
@@ -142,8 +184,25 @@ So we have
 \end{equation}
 
 \section{Hashing-3.4*}
+\textbf{Question:} Is Multiply-Shift c-approximately strongly universal for any constant c?
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
 %zhigao
+
+
+No, because not all pairs of keys hash independently.\\
+\textbf{Proof}:\\
+For \(h(x)=q\) and \(h(y) = r\), we have:
+\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor=q\]
+\[\left\lfloor \frac{(a \cdot y) \mod 2^w}{2^{w-\ell}} \right\rfloor=r\]
+Consider \(x=0, \quad y\neq0\), For \(h(x)\), we get:
+\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor=0\]
+Regardless of the value of a, \(h(0)\) is always equal to 0.
+
+For \(h(x)=h(y)\), based on the definition of Multiply-Shift, we get:
+
+\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor = \left\lfloor \frac{(a \cdot y) \mod 2^w}{2^{w-\ell}} \right\rfloor\]
+
+
 
 \section{Hashing-3.5}
 %wenshuo
