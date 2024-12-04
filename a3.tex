@@ -143,7 +143,33 @@ So we have
 
 \section{Hashing-3.4*}
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
-%zhigao
+%zhigao... wanjing done but...not sure....
+\textbf{Question} Is Multiply-Shift c-approximately strongly universal for any constant c?
+
+\textbf{Answer}
+No. Here we have found a possible pair of $x$ and $y$ that contradicts the definition of strong universality.
+
+According to the Observation3.1 in the textbook, an equivalent definition of strong universality is that each key is hashed uniformly into [m], and that every two distinct keys are hashed independently.
+
+For $x$ we have 
+
+\begin{equation}
+\begin{aligned}
+h(x) = \lfloor \frac{a * x \mod 2^w}{2^{w-l}} \rfloor
+\end{aligned}
+\end{equation}
+
+Pick $y=x+2^{l}$, we have :
+\begin{equation}
+\begin{aligned}
+h(y) &= \lfloor \frac{a*(x+2^l)  \mod 2^w }{2^{w-l}} \rfloor \\
+&= \lfloor \frac{a*x \mod 2^w + a * 2^l \mod \, 2^w }{2^{w-l}} \rfloor \\
+&= \lfloor \frac{a*x \mod 2^w + a * 2^l }{2^{w-l}} \rfloor \\
+&= \lfloor \frac{a*x \mod 2^w }{2^{w-l}}  + a * 2^{2*l-w} \rfloor \\
+\end{aligned}
+\end{equation}
+
+We can see when $a=2^{w-2*l}$, there will be a possibility of $h(x) = h(y)$, when the floor is passed, and thus not all pairs of distinct keys will hash indepedently.
 
 \section{Hashing-3.5}
 %wenshuo
@@ -155,6 +181,51 @@ So we have
 %wanjing
 \textbf{Question}
 Define the optimization problem $LONGEST-PATH-LENGTH$ as the relation that associates each instance of an undirected graph and two vertices with the number of edges in a longest simple path between the two vertices. Define the decision problem $LONGEST-PATH= \{\langle G, u, v, k\rangle: G = (V, E)$ is an undirected graph, $u, v \in V, k \ge 0$ is an integer, and there exists a simple path from $u$ to $v$ in $G$ consisting of at least $k$ edges $\}$. Show that the optimization problem $LONGEST-PATH-LENGTH$ can be solved in polynomial time if and only if $LONGEST-PATH \in P$.
+
+\textbf{Answer}
+
+We split the target into two cases to prove, one is to prove when the $LONGEST-PATH \subseteq P$, the $LONGEST-PATH-LENGTH \subseteq P$(Note as A), and the other is when he $LONGEST-PATH-LENGTH \subseteq P$, the $LONGEST-PATH \subseteq P$(Note as B).
+ 
+\subsection{Proof of A}
+Assume the $LONGEST-PATH \subseteq P$, and we apply binary search for finding the longest path length. The steps are as follows:
+
+\textbf{Initialize} Initialize $low = 0$ and $high = |V| - 1$, for the path visits each vertex exactly once, and the longest path in a graph cannot exceed $|V| - 1$ edges . 
+
+\textbf{Step1} Set $mid = \lfloor (low + high) / 2 \rfloor$.
+
+\textbf{Step2} Use the polynomial-time algorithm for $LONGEST-PATH$ to check if there is a path of length at least $mid$ from $u$ to $v$.
+
+\textbf{Step3} If yes, it means there may be a longer path, and we update $low = mid + 1$.
+
+\textbf{Step4} If no, it means the longest path is shorter than current range, and we update $high = mid - 1$.
+
+\textbf{Result} The value of $high$ at the end of the search will give the length of the longest simple path between $u$ and $v$.
+
+Since the decision problem runs in polynomial time, and binary search over $|V|$ iterations requires at most $O(\log |V|)$ queries, the entire process is polynomial in the size of the graph.
+
+\subsection{Proof of B}
+Assume the $LONGEST-PATH-LENGTH \subseteq P$, and then we apply deep first search. The Algorithm steps as follows:
+ 
+\textbf{Initialize} Push a tuple $<u, 0, path>$ to a Stack $S$, where path is an empty string. Set the result path vector $res$ to be empty. The begin a loop, while $S$ is not empty:
+
+\textbf{Step1} Pop one tuple of $<vertex, counter, path>$ from $S$, note as $<s, c>$. 
+
+\textbf{Step2} Run the $LONGEST-PATH-LENGTH$ to compute the longest path length $len$ between $s$ and $v$, which costs polynomial-time.
+
+\textbf{Step3} If $len \geq k-c$, for all the vertex $s'$ that having an edge out of $s$, push $<s', c+1, path+s>$ into $S$.
+
+\textbf{Step4} If $s = v$ and $c \ge k$, then $path + v$ is an possible answer, and we can break the loop.   
+
+\textbf{Step5} When the loop is end and there is no answer output, there is no max length path.
+
+\textbf{Complexity Analysis}
+
+ $LONGEST-PATH-LENGTH$ runs in polynomial time by assumption.
+
+The DFS runs in $O(|V| + |E|)$ time.
+
+Overall, the algorithm runs in polynomial time because the DFS and path length comparison are polynomial operations.
+
 
 
 \section{Complexity-34.1-5}
