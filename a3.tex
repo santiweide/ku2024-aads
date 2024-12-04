@@ -215,19 +215,6 @@ h(y) &= \lfloor \frac{a*(x+2^l)  \mod 2^w }{2^{w-l}} \rfloor \\
 We can see when $a=2^{w-2*l}$, there will be a possibility of $h(x) = h(y)$, when the floor is passed, and thus not all pairs of distinct keys will hash indepedently.
 
 
-No, because not all pairs of keys hash independently.\\
-\textbf{Proof}:\\
-For \(h(x)=q\) and \(h(y) = r\), we have:
-\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor=q\]
-\[\left\lfloor \frac{(a \cdot y) \mod 2^w}{2^{w-\ell}} \right\rfloor=r\]
-Consider \(x=0, \quad y\neq0\), For \(h(x)\), we get:
-\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor=0\]
-Regardless of the value of a, \(h(0)\) is always equal to 0.
-
-For \(h(x)=h(y)\), based on the definition of Multiply-Shift, we get:
-
-\[\left\lfloor \frac{(a \cdot x) \mod 2^w}{2^{w-\ell}} \right\rfloor = \left\lfloor \frac{(a \cdot y) \mod 2^w}{2^{w-\ell}} \right\rfloor\]
-
 
 
 \section{Hashing-3.5}
