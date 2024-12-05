@@ -205,44 +205,39 @@ For any given key $x$ in $S$, let $d(x)$ be the depth of $x$ in the search tree 
 % wanjing
 \textbf{Answer}
 
+First we discover that the depth of $x$ in the search tree is the same as time that the recursion is called. Each recursion splits the rest of S in to a left part and a right part.
 
-%Let $S$ be the set of the $n$ keys, and n us the total number of S. Let i be the number of elements smaller than x, then there are $n-i-1$ numbers greater than x. The probability of x being in level k has two cases: when x is the left child of its father, the father is greater than x, and when x is the right child of the father, the father is smaller than x.
-
-Let S be a sorted set of the original number, and we focus on S(x) meaning the x-th largest number in S. Then P(d(S(x))==i) = P(d(father) == i-1) * P(S(x) is selected as the pivot) = P(d(father) == i-1) * 1/(n-i). When the father is smaller than x. Let k be the total levels of the tree, then $2^{k-1} < n <=2^{k}$, and we have
+Let $n_i$ to be the size of S after $i$ times of recursion. We have:
 
 \begin{equation}
 \begin{aligned}
-P(d(S(x))==i) &= 2^{i-1}/n\\
-&1<=i <= k
+P(pivot_i == x) = \frac{1}{n_i} = P(d(x) = i)\\
 \end{aligned}
 \end{equation}
 
+Let k to be the final layer number of the tree, then $i=1,2,...,k$, and $0 <= k <= n$. Then
+
 \begin{equation}
 \begin{aligned}
-E(d(x)) &= \sum_{i=1}^{k}  i*2^{i-1}/n\\
-&<=\sum_{i=1}^{k}  i*2^{i-k-1}\\
-&=2^{-k}\sum_{i=1}^{k}i*2^{i-1}\\
-&=2^{-k}*(1+(k-1)*2^k)\\
-&<=1/n + log(n) - 1
+E(d(x)) &= \sum_{i=2}^{k}  \frac{1}{n_i}\\
+&= \frac{1}{n} + \frac{1}{n-1} + ... + \frac{1}{n-k+1} 
 \end{aligned}
 \end{equation}
 
-Also we have
+For the worst case, the tree is a linked-list, and 
+
 \begin{equation}
 \begin{aligned}
-E(d(x)) &= \sum_{i=1}^{k}  i*2^{i-1}/n\\
-&>\sum_{i=1}^{k-1}  i*2^{i-k-1-1}\\
-&=2^{-k-1}\sum_{i=1}^{k-1}i*2^{i-1}\\
-&=2^{-k-1}*(1+(k-2)*2^(k-1))\\
-&>=1/2*(1/n + 1/2*(log(n)-2))
+E[d(x)] = \sum_{k=2}^{n} \frac{1}{k} <= H_n = \Theta(log(n))\\
 \end{aligned}
 \end{equation}
 
-
-So we have
+For the best case, the tree is a balanced binary search tree, 
 \begin{equation}
 \begin{aligned}
-E[d(x)] = \Theta(log(n))\\
+E[d(x)] &= \sum_{i=2}^{\lceil log_2 n \rceil}  \frac{1}{n_i} \\
+&<= H_n \\
+&= \Theta(log(n))\\
 \end{aligned}
 \end{equation}
 
