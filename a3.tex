@@ -303,7 +303,7 @@ That is an exponential-time algorithm.
 Let $\phi$ be a boolean formula constructed from the boolean input variables $x_1, x_2, \dots, x_k$, negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$), and parentheses. The formula $\phi$ is a \textit{\textbf{tautology}} if it evaluates to $1$ for every assignment of $1$ and $0$ to the input variables. Define $TAUTOLOGY$ as the language of boolean formulas that are tautologies. Show that $TAUTOLOGY \in co-NP$.
 
 \textbf{Answer}
-To verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP$.
+To verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP$. We find that the $\phi$ could be transformed into a graph with input variables as the edges, and the negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$) as vertices. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclist graph from starting point to ending point.
 
 \subsection{Certificate}
 The certificate for $\overline{TAUTOLOGY}$ is the assignment $(x_1,x_2,...,x_k) \in {0,1}^k$ such that $\phi(x_1,x_2,...,x_k) = 0$.
