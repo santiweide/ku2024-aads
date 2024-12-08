@@ -303,7 +303,20 @@ That is an exponential-time algorithm.
 Let $\phi$ be a boolean formula constructed from the boolean input variables $x_1, x_2, \dots, x_k$, negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$), and parentheses. The formula $\phi$ is a \textit{\textbf{tautology}} if it evaluates to $1$ for every assignment of $1$ and $0$ to the input variables. Define $TAUTOLOGY$ as the language of boolean formulas that are tautologies. Show that $TAUTOLOGY \in co-NP$.
 
 \textbf{Answer}
-To verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP$. We find that the $\phi$ could be transformed into a graph with input variables as the edges, and the negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$) as vertices. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclist graph from starting point to ending point.
+Now we have:
+
+ $TAUTOLOGY$=\{$\langle$C$\rangle$ $\mid$ C is a satisfiable $\phi$ formula outputs 1\}
+ 
+ 
+ $\overline{TAUTOLOGY} $=\{$\langle$C$\rangle$ $\mid$ C is a satisfiable $\phi$ formula outputs 0\}
+ 
+So to verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP$. 
+ 
+%We find that the $\phi$ could be transformed into a graph with input variables as the edges, and the negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$) as vertices. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclic graph from starting point to ending point.
+ 
+We construct algorithm $A$ with inputs $x$ and $y$.  $A$ checks that $x$ represents a boolean combination in$phi$  with one output result and $y$ represents an assignment of truth values to the result of $\phi$.
+
+Suppose we create a directed graph $G=(V,E)$ with one vertex for each combinational element and with k directed edges for each vertex whose fan-out is k; the graph contains a directed edge $(u,v)$, if a wire connects the output of element $u$ to an input of element $v$. Then G must be acyclic. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclic graph from starting point to ending point.
 
 \subsection{Certificate}
 The certificate for $\overline{TAUTOLOGY}$ is the assignment $(x_1,x_2,...,x_k) \in {0,1}^k$ such that $\phi(x_1,x_2,...,x_k) = 0$.
