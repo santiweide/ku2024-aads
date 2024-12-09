@@ -266,11 +266,35 @@ We still apply Karger's randomize algorithm and pick random two vertices each ti
 
 If there is an edge between $u$ and $v$, we shrink the edge;
 
-If there is no edge between $u$, $v$, we discard this selection and select again. 
+If there is no edge between $u$, $v$, we select again. \\
+Still we want to compute the possibility that $RANDMINCUT(G)$ returns a min-cut.\\
+Let $P_i$ be the event of not choosing (u,v) as an edge of the mincut at the $i-th$ operation.\\
+At the $i-th$ operation, the vertices number is $n-i+1$, and let $c=|S||T|$ , then\\
 
-Still we want to compute the possibility that $RANDMINCUT(G)$ returns a min-cut.
+\begin{equation}
+\begin{aligned}
+P_i = 1 - \frac{2c}{(n-i+1)(n-i)}
+\end{aligned}
+\end{equation}
 
-Let the specific min-cut consists of vertices set S and T, with size |S| and |T|.
+It takes n-2 times to shrink in the randomize algorithm, until there are only two vertices left. So we have
+
+\begin{equation}
+\begin{aligned}
+P_{mincut} &= \prod_{i=1}^{n-2} (1 - \frac{2c}{(n-i+1)(n-i)})\\
+&\approx  \prod_{i=1}^{n-2} (1 - \frac{2c}{n^2})\\
+ln(P_{mincut}) &= \sum_{i=1}^{n-2} (1 - \frac{2c}{n^2})\\
+&\approx  \frac{2c}{n^2} * (n-2)\\
+&= -\frac{2c}{n}
+\end{aligned}
+\end{equation}
+
+Thus:
+\begin{equation}
+\begin{aligned}
+P_{mincut} &\approx  e^{-\frac{2c}{n}}
+\end{aligned}
+\end{equation}
 
 
 \section{Randomized Algorithm-exercises 1.3}
