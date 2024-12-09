@@ -32,6 +32,36 @@
 \section{34.3-6}
 %wanjing
 \textbf{Question}
+ A language $L$ is \textit{\textbf{complete}} for a language class $C$ with respect to polynomial-time reductions if $L \in C$ and $L' \le_\text{P} L$ for all $L' \in C$. Show that $\emptyset$ and $\{0, 1\}^{*}$ are the only languages in $\text{P}$ that are not complete for $\text{P}$ with respect to polynomial-time reductions.
+
+\textbf{Answer}
+Suppose the polynomial-time reduction is \text{f}:$\{0, 1\}^{*} \rightarrow \{0, 1\}^{*}$. Then $L' \le_\text{P} L$ means for all $x \in \{0,1\}^{*}$
+
+\begin{equation}
+x \in L' \; if \, and \; only \; if f(x) \in  L
+\end{equation}
+
+$\emptyset$ rejects everything, $\emptyset$  cannot be the $L$.
+
+$\{0, 1\}^{*}$ accepts everything, it is a trivial information. If $x \in L$, x may not $\in L'$, so  $\{0, 1\}^{*}$  cannot be the $L$.
+
+For the rest of the cases, we can construct f as follows:
+
+Let $A_{L'}$ be the deterministic polynomial-time algorithm that decides $L'$. For any input $x \in L'$:
+
+If $A_{L'}(x)=1$, map $x$ to some $f(x) \in L$;
+
+If $A_{L'}(x)=0$, map $x$ to some $f(x) \notin L$;
+
+\textbf{Proof of Correctness}
+
+Since $A_{L'}$  runs in polynomial time, $f(x)$ is computable in polynomial time.
+
+For all $x \in L'$, we have $A_{L'}(x) = 1$, and we have $f(x) \in L$.
+
+For those $x$ whose $f(x) \in L$, assume $A_{L'}(x)=0$, then  $f(x) \notin L$, which is contradict to our assumption. So  $A_{L'}(x)=1$ and $x \in L'$. The symmmetry proof could be made for those $x \notin L'$.
+
+Thus such $f$ exists for any $L' \in P$, $L' \le_\text{P} L$. And $L$ is complete for $P$.
 
 \section{34.4-3}
 %zhigao
@@ -46,6 +76,32 @@
 \section{34.5-3}
 %wanjing
 \textbf{Question}
+The \textit{integer linear-programming problem} is like the 0-1 integer-programming problem given in Exercise 34.5-2, except that the values of the vector $x$ may be any integers rather than just 0 or 1. Assuming that the 0-1 integer-programming problem is NP-hard, show that the integer linear-programming problem is NP-complete.
+
+(34.5.2)Given an integer $m \times n$ matrix $A$ and an integer $m$-vector $b$, the \textbf{\textit{0-1 integer-programming problem}} asks whether there exists an integer $n$-vector $x$ with elements in the set $\{0, 1\}$ such that $Ax \le b$. Prove that 0-1 integer programming is NP-complete. (Hint: Reduce from 3-CNF-SAT.)
+
+\textbf{Answer}
+
+Here we note the \textit{integer linear-programming problem} as \textbf{ILP}, and the 0-1 integer-programming problem is \textbf{0-1-LP}.
+
+%\textbf{Prove 0-1-LP $\in$ NP}
+
+%\textbf{Prove 0-1-LP $\in$ NPC by proving 3-CNT-SAT $\leq_{P}$ 0-1-LP}
+
+\textbf{Prove ILP $in$ NP}
+For a given $x$, we can compute $Ax$ and check if $Ax \leq b$ in polynomial time(more precisely in $O(mn)$). So the verification of ILP is in NP is in polynomial time.
+
+\textbf{Prove ILP $\in$ NPC by proving 0-1-LP $\leq_{P}$ ILP}
+
+Since 0-1-LP is NP-hard, if we reduce ILP to 0-1-LP, ILP will also be NP-hard. 
+
+We introduce additional constraints to the restricted $x$ value to $0 \leq x \leq 1$, which is the same as $x_i \in \{0,1\}$ because $x$ is an integer. Also we take the input $(A,b)$ in the 0-1-LP. Then the LP is the same as 0-1-LP problem.
+
+Since adding constrains to the input x could be done in O(n), which travel the n elements of x and when x is less than 0 then puts 0, when larger than 1 then puts 1, the transformation is in polynomial time.
+
+Thus the reduction is valid and efficient.
+
+From above we can see the ILP is NP-complete.
 
 \section{34.5-6}
 %zhigao
