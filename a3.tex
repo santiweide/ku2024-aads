@@ -53,7 +53,26 @@ So, the minimum size of m should be equal to \(|U|\), in other words \(|m|\geq|U
 
 \section{Hashing-2.3}
 %wenshuo
-\textbf{Question:}
+\textbf{Question:}\\
+Let u $\leq$ m. Is the identity function f(x) = x a universal hash function [u]$\rightarrow$[m]?\\
+\textbf{Answer:}\\
+A hash function \( h \) is universal if for any distinct \( x, y \in [u] \), the probability of a collision satisfies:
+\[
+P[h(x) = h(y)] \leq \frac{1}{m}.
+\]
+Then consider the identity function \( f(x) = x \):
+\begin{enumerate}
+    \item When \( u \leq m \), each element in \( [u] \) maps to a unique element in \( [m] \) because \( x \) maps directly to itself, with no collisions.
+    \item This implies:
+    \[
+    P[f(x) = f(y)] = 0, \quad \text{for } x \neq y,
+    \]
+    which satisfies:
+    \[
+    P[f(x) = f(y)] \leq \frac{1}{m}.
+    \]
+\end{enumerate}
+The identity function \( f(x) = x \) is a universal hash function in this scenario because it satisfies the definition of universality.
 
 \section{Hashing-2.4}
 % in (b) assume x is not in S
@@ -170,6 +189,25 @@ Finally, Substitute into the inequality:
 
 \section{Hashing-3.1}
 %wenshuo
+\textbf{Question:}\\
+Generalize 2-independence. What is 3-independence? k-independence?\\
+\textbf{Answer:}\\
+A hash function \( h : [u] \to [m] \) is \( k \)-independent if for any distinct \( k \) keys \( x_1, x_2, \dots, x_k \in [u] \) and any \( k \) hash values \( q_1, q_2, \dots, q_k \in [m] \), the following holds:
+\[
+P[h(x_1) = q_1 \land h(x_2) = q_2 \land \dots \land h(x_k) = q_k] = \frac{1}{m^k}.
+\]
+Each key \( x_i \) is hashed uniformly to a value in \( [m] \). The hash values for any \( k \) distinct keys are independent random variables.
+\begin{enumerate}
+    \item 2-independence (Strong Universality): For two distinct keys \( x, y \in [u] \), the hash values \( h(x) \) and \( h(y) \) are independent and uniformly distributed:
+    \[
+    P[h(x) = q \land h(y) = r] = \frac{1}{m^2}.
+    \]
+    \item 3-independence: For three distinct keys \( x, y, z \in [u] \), the hash values \( h(x), h(y), h(z) \) are independent and uniformly distributed:
+    \[
+    P[h(x) = q \land h(y) = r \land h(z) = s] = \frac{1}{m^3}.
+    \]
+\end{enumerate}
+A \( k \)-independent hash function ensures that any \( k \) keys are hashed independently, with the joint probability of their hash values being the product of individual probabilities.
 
 \section{Hashing-3.2}
 %jiayi
@@ -259,7 +297,26 @@ We can see when $a=2^{w-2*l}$, there will be a possibility of $h(x) = h(y)$, whe
 
 \section{Hashing-3.5}
 %wenshuo
-
+\textbf{Question:}\\ Given the \( S_{h,t}(B) \) and \( S_{h,t}(C) \), how would you estimate the size of the symmetric difference \( (B \setminus C) \cup (C \setminus B) \).\\
+\textbf{Answer:}\\
+\[
+(B \setminus C) \cup (C \setminus B) = (B \cup C) \setminus (B \cap C).
+\]
+Let \( S_{h,t}(B) \) and \( S_{h,t}(C) \) be the samples obtained using a strongly universal hash function \( h \) with threshold \( t \). From these, we can compute the sampled versions of the union and intersection of \( B \) and \( C \):
+    \[
+    S_{h,t}(B \cup C) = S_{h,t}(B) \cup S_{h,t}(C).
+    \]
+    \[
+    S_{h,t}(B \cap C) = S_{h,t}(B) \cap S_{h,t}(C).
+    \]
+The sampled symmetric difference can be computed as:
+\[
+S_{h,t}((B \setminus C) \cup (C \setminus B)) = S_{h,t}(B \cup C) \setminus S_{h,t}(B \cap C).
+\]
+To estimate the size of the symmetric difference \( |(B \setminus C) \cup (C \setminus B)| \), we scale the size of the sampled symmetric difference by the ratio \( \frac{m}{t} \), where \( m \) is the range of the hash function and \( t \) is the sampling threshold:
+\[
+|(B \setminus C) \cup (C \setminus B)| \approx \left| Sh,t(B \cup C) \setminus Sh,t(B \cap C) \right| \cdot \frac{m}{t}.
+\]
 \section{Hashing-3.6}
 %jiayi
 \textbf{Question:}
@@ -353,6 +410,47 @@ That is an exponential-time algorithm.
 
 \section{Complexity-34.2-5}
 %wenshuo
+\textbf{Question:}\\
+Show that any language in NP can be decided by an algorithm running in time $2^{O(n^k)}$ for some constant k.\\
+\textbf{Answer:}\\
+A language \(L\) is in \(\text{NP}\) if there exists a nondeterministic Turing machine \(N\) and a polynomial \(p(n)\), such that for any input \(x\):
+\begin{enumerate}
+    \item If \(x \in L\), there exists a computation path in \(N\) that accepts \(x\).
+    \item If \(x \notin L\), \(N\) rejects \(x\) on all computation paths.
+    \item \(N\)'s runtime on input \(x\) is at most \(p(|x|)\), where \(|x|\) is the length of \(x\).
+\end{enumerate}
+A nondeterministic Turing machine can be simulated by a deterministic Turing machine through exploration of all possible computation paths. We note the following:
+\begin{itemize}
+    \item On an input of length \(n\), \(N\) runs for at most \(p(n)\) steps.
+    \item At each step, \(N\) has a finite number of possible transitions, say \(c\) (a constant depending on \(N\)'s design).
+\end{itemize}
+Thus, the total number of computation paths in \(N\) is bounded by:
+\[
+c^{p(n)}
+\]
+where \(p(n)\) is the polynomial time bound of \(N\).
+
+To simulate \(N\) deterministically, a deterministic Turing machine \(M\) enumerates all these paths and simulates each one. For each path:
+\begin{itemize}
+    \item \(M\) simulates \(N\)'s behavior for at most \(p(n)\) steps.
+    \item \(M\) checks if any path leads to acceptance (to decide if \(x \in L\)).
+\end{itemize}
+The runtime of \(M\) is therefore:
+\[
+\text{(Number of paths)} \times \text{(time per path)} = c^{p(n)} \cdot O(p(n))
+\]
+Since \(p(n)\) is a polynomial, say \(p(n) = O(n^k)\) for some constant \(k\), the runtime of \(M\) becomes:
+\[
+c^{p(n)} \cdot O(p(n)) = c^{O(n^k)} \cdot O(n^k)
+\]
+Using the fact that \(c^{O(n^k)} = 2^{O(n^k) \cdot \log_2(c)}\), and since \(\log_2(c)\) is a constant, the runtime can be simplified as:
+\[
+2^{O(n^k)}
+\]
+
+
+
+
 
 \section{Complexity-34.2-6}
 %jiayi
@@ -416,13 +514,55 @@ Now we need to verify this function can be run in polynomial time.
 The total runtime for this function is:
 \[T_1(n)+T_2(T_1(n))\]
 \(T_1(n)\) and \(T_2(n)\) are polynomial-time, so the total runtime is also polynomial-time.
-
-
-
-
-
-
 \section{Complexity-34.3-3}
 %wenshuo
+\textbf{Question:}\\
+Prove that \( L \leq_p \overline{L} \) if and only if \( \overline{L} \leq_p L \), where \( \leq_p \).\\
+\textbf{Answer:}\\
+A language \( A \) is reducible to a language \( B \), written \( A \leq_p B \), if there exists a polynomial-time computable function \( f \) such that for every string \( x \):
+   \[
+   x \in A \iff f(x) \in B.
+   \]
+\( \overline{L} \): The complement of a language \( L \), i.e., \( \overline{L} = \Sigma^* \setminus L \), where \( \Sigma^* \) is the set of all strings over the input alphabet.
+
+\subsubsection*{\( \Rightarrow \): Assume \( L \leq_p \overline{L} \)}
+- By definition, there exists a polynomial-time computable function \( f \) such that for every string \( x \):
+  \[
+  x \in L \iff f(x) \in \overline{L}.
+  \]
+- By the definition of \( \overline{L} \), \( f(x) \in \overline{L} \) means \( f(x) \notin L \). Thus:
+  \[
+  x \in L \iff f(x) \notin L.
+  \]
+- Construct a new function \( g \) that maps \( x \) to \( f(x) \), reversing membership:
+  \[
+  g(x) = f(x).
+  \]
+  - If \( x \in \overline{L} \), then \( g(x) \in L \) because \( f(x) \notin L \).
+  - Therefore, \( \overline{L} \leq_p L \), as \( g(x) \) is computable in polynomial time.
+
+\subsubsection*{\( \Leftarrow \): Assume \( \overline{L} \leq_p L \)}
+- By definition, there exists a polynomial-time computable function \( g \) such that for every string \( x \):
+  \[
+  x \in \overline{L} \iff g(x) \in L.
+  \]
+- By the definition of \( \overline{L} \), \( x \in \overline{L} \) means \( x \notin L \). Thus:
+  \[
+  x \notin L \iff g(x) \in L.
+  \]
+- Equivalently:
+  \[
+  x \in L \iff g(x) \notin L.
+  \]
+- Construct a new function \( f \) that maps \( x \) to \( g(x) \), for complement membership:
+  \[
+  f(x) = g(x).
+  \]
+  - If \( x \in L \), then \( f(x) \in \overline{L} \) because \( g(x) \notin L \).
+  - Therefore, \( L \leq_p \overline{L} \), as \( f(x) \) is computable in polynomial time.
+Both directions are proven. Thus:
+\[
+L \leq_p \overline{L} \iff \overline{L} \leq_p L.
+\]
 
 \end{document}
