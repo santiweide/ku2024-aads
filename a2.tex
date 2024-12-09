@@ -224,44 +224,42 @@ For any given key $x$ in $S$, let $d(x)$ be the depth of $x$ in the search tree 
 
 % wanjing
 \textbf{Answer}
+Whenever an element is compared its depth will increase. So the depth of element $x$, $d(x)$ is equivalent to the number of times x is compared until it becomes a pivot or no longer participates in the subproblem. So the $E[d(x)]$ is the same as $E(A)$ where $A$ stands for the case when $x$ is chosen as the pivot, thus the sum counting of how many times $x$ is compared. \\
 
-First we discover that the depth of $x$ in the search tree is the same as time that the recursion is called. Each recursion splits the rest of S in to a left part and a right part.
+Let $[S_{(1)}, ..., S_{(n)}] := RandQS(S)$. 
 
-Let $n_i$ to be the size of S after $i$ times of recursion. We have:
-
-\begin{equation}
-\begin{aligned}
-P(pivot_i == x) = \frac{1}{n_i} = P(d(x) = i)\\
-\end{aligned}
-\end{equation}
-
-Let k to be the final layer number of the tree, then $i=1,2,...,k$, and $0 <= k <= n$. Then
+Let $Xij$ be the number of times that $S_{(i)}$ and $x$ are compared, where $x:=S_{(j)}$. Also let $p_{ij}$ be the probability of this event.
 
 \begin{equation}
 \begin{aligned}
-E(d(x)) &= \sum_{i=2}^{k}  \frac{1}{n_i}\\
-&= \frac{1}{n} + \frac{1}{n-1} + ... + \frac{1}{n-k+1} 
+E[d(x)] &= E[\#comparisons] \\
+&= E[\sum_{i<j} X_{ij}]\\
+&=\sum_{i<j} E[X_{ij}]\\
+&=\sum_{i<j} Pr[X_{ij} = x] * x\\
+&= \sum_{i<j}  (1-p_{ij}) * 0 + p_{ij} * 1\\
+&=  \sum_{i<j} p_{ij}
 \end{aligned}
 \end{equation}
 
-For the worst case, the tree is a linked-list, and 
-
+From the Lemma of: $S_{(i)}$ and $S_{(j)}$ are compared iff $S_{(i)}$ or $S_{(j)}$ is the first of $S_{(i)}, ..., S_{(j)}$ to be chosen as a pivot, we can see $p_{ij}$ is the conditional probability of picking $S_{(i)}$ or $S_{(j)}$
+ given that the pivot is picked uniformly at random in $\{S_{(i)}, ..., S_{(j)}\}$. So $p_{ij} = \frac{2}{j+1-i}$.
+ 
+ Then 
 \begin{equation}
 \begin{aligned}
-E[d(x)] = \sum_{k=2}^{n} \frac{1}{k} <= H_n = \Theta(log(n))\\
+E[d(x)] &=  \sum_{i<j} p_{ij} \\
+&=  \sum_{i<j}  \frac{2}{j+1-i}\\
+&= \sum_{i=1}^{n-1} \sum_{j=i+1}^{n}  \frac{2}{j+1-i}\\
+&= \sum_{i=1}^{n-1} \sum_{k=2}^{n+1-i}  \frac{2}{k}\\
+&= 2*n*\sum_{k=2}^{ni}  \frac{2}{k}\\
+&= 2*n*(\sum_{k=1}^{n}  \frac{2}{k}-1)\\
+&=2*n*(H_{n}-1)\\
+&\leq 2*n* \int_{1}^{n} \frac{1}{x} dx \\
+&\in O(nlogn)
 \end{aligned}
 \end{equation}
 
-For the best case, the tree is a balanced binary search tree, 
-\begin{equation}
-\begin{aligned}
-E[d(x)] &= \sum_{i=2}^{\lceil log_2 n \rceil}  \frac{1}{n_i} \\
-&<= H_n \\
-&= \Theta(log(n))\\
-\end{aligned}
-\end{equation}
-
-
+So $f(n)= nlogn$
 \section{Randomized Algorithm-2}
 \textbf{Question}
 How many runs of randomized contraction do we need to be 99\% sure that a minimum cut is found?
