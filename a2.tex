@@ -143,42 +143,13 @@ Write an LP in standard form in the plane so that: (1) the feasible region is a 
 \[
 \begin{aligned}
 Maximize& \\
-&z = x_1 + x_2, \\
+&z = x_1, \\
 Subject \, to& \\
-& \quad x_1 \geq 0, \\
-& \quad x_2 \geq 0, \\
-& \quad x_1 + 2x_2 \leq 2, \\
-& \quad 2x_1 + x_2 \leq 2, \\
-& \quad x_1 - x_2 \leq 1.
-\end{aligned}
-\]\\
-\textbf{Issue Identified:}
-$x_1$ = $x_2$ = 1 is a feasible solution and the objective is 2, so the maximum is clearly at least 2 instead of 1.\\
-\textbf{Explanation:}
-I find that \(x_1 = x_2 = 1\) \textbf{is not a feasible solution} in my LP because it violates some of the constraints. We can check the constraints at \(x_1 = x_2 = 1\):
-\begin{itemize}
-    \item \(x_1 + 2x_2 \leq 2\):
-    \[
-    1 + 2 \times 1 = 3 \not\leq 2
-    \]
-    \item \(2x_1 + x_2 \leq 2\):
-    \[
-    2 \times 1 + 1 = 3 \not\leq 2
-    \]
-\end{itemize}
-Since both of these constraints are violated, \(x_1 = x_2 = 1\) is \textbf{not feasible}.
-
-However, to eliminate any confusion and to ensure clarity, I have adjusted the LP to prevent such misunderstandings. 
-\[
-\begin{aligned}
-Maximize& \\
-&z = x_1 + x_2, \\
-Subject \, to& \\
-& \quad x_1 \geq 0, \\
-& \quad x_2 \geq 0, \\
-& \quad x_1 + x_2 \leq 1, \\
-& \quad x_1 + 2x_2 \leq 2, \\
-& \quad 2x_1 + x_2 \leq 2.
+& \quad x_1 + x_2 \leq \sqrt{2}, \\
+& \quad x_1 - x_2 \leq \sqrt{2}, \\
+& \quad -x_1 + x_2 \leq \sqrt{2}, \\
+& \quad -x_1 - x_2 \leq \sqrt{2}, \\
+& \quad x_1 \leq 1.
 \end{aligned}
 \]
 \section{Linear Programming - C}
@@ -288,7 +259,8 @@ t \geq \frac{4.605 \cdot n(n - 1)}{2}.
 \textbf{Question:}
 Suppose that at each step of our min-cut algorithm, instead of choosing a random edae for contraction we choose two vertices at random and coalesce them into a single vertex. Show that there are inputs on which the probability that this modified algorithm finds a min-cut is exponentially small.\\
 \textbf{Answer:}
-Consider a complete graph \( K_n \) with \( n \) vertices, where each pair of vertices is connected by an edge. In this graph, the minimum cut is any single edge because removing any edge separates two vertices. Initially, the graph has \( n \) vertices and \( \binom{n}{2} \) edges. Each edge corresponds to a valid minimum cut. When two vertices \( u \) and \( v \) are randomly chosen and merged, all edges between \( u \) and \( v \) are eliminated. If \( u \) and \( v \) are endpoints of a minimum cut, that cut is destroyed. The probability of not destroying a specific minimum cut at any given step depends on the choice of \( u \) and \( v \). However, since the algorithm does not focus on edges, it does not systematically preserve cuts. Over many steps, the number of remaining cuts diminishes exponentially. Suppose \( n = 4 \). The graph \( K_4 \) has 6 edges, each corresponding to a minimum cut. Initially, the probability of selecting two vertices \( u \) and \( v \) that do not disrupt a specific cut is high. After merging, the graph is reduced to 3 vertices, and the number of valid cuts shrinks. By the time the graph is reduced to 2 vertices, the probability of preserving any specific minimum cut is negligible. The overall probability of success is exponentially small as \( n \) increases.
+Consider a complete graph \( K_n \) with \( n \) vertices, where each pair of vertices is connected by an edge. In this graph, the minimum cut consists of all edges incident to a single vertex, and the size of the minimum cut is \( n-1 \). Initially, the graph has \( n \) vertices and \( \binom{n}{2} \) edges. Each vertex corresponds to a valid minimum cut. When two vertices \( u \) and \( v \) are randomly chosen and merged, all edges between \( u \) and \( v \) are eliminated. If \( u \) or \( v \) belongs to the same vertex set defining a minimum cut, that cut is destroyed. The probability of not disrupting a specific minimum cut at any given step depends on the choice of \( u \) and \( v \). However, since the algorithm does not explicitly consider edges, it does not systematically preserve cuts. As the graph is reduced to fewer vertices, the number of remaining cuts shrinks, and the probability of preserving any specific minimum cut decreases. By the time the graph is reduced to 2 vertices, the probability of maintaining any specific minimum cut is exponentially small. Consequently, the overall probability of success is exponentially small as \( n \) increases.
+
 
 
 \section{Randomized Algorithm-exercises 1.3}
