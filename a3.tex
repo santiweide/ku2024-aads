@@ -54,10 +54,36 @@ So, the minimum size of m should be equal to \(|U|\), in other words \(|m|\geq|U
 \section{Hashing-2.3}
 %wenshuo
 
-\section{Hashing-2.4 }
+\section{Hashing-2.4}
 % in (b) assume x is not in S
 %jiayi
+\textbf{Question:} 
+Assume that $x \notin S$ and that $h$ is universal. Let $I(y)$ be an indicator variable which is $1$ if $h(x) = h(y)$ and $0$ otherwise. Then the expected number of elements in $L[h(x)]$ is
+\begin{align}
+    E_h[|L[h(x)]|] = E_h [\sum_{y\in S} I(y)]  = \sum_{y \in S} E_h[I(y)] = \sum_{y \in S} Pr_h[h(y) = h(x)] \leq n/m \leq 1
+\end{align}
+ The second equality uses linearity of expectation.
+(a) What is the expected number of elements in $L[h(x)]$ if $x \in S$ ?
+(b) What bound do you get if $h$ is only 2-approximately universal? (assume $x$ is not in $S$)
 
+\textbf{Answer}
+(a) similar to the suppose of the question, assume that $x \in S$, $h$ is universal and $I(y)$ be the indicator.
+\begin{align}
+    E_h[|L[h(x)]|] = E_h [\sum_{y\in S} I(y)]  = \sum_{y \in S} E_h[I(y)]
+\end{align}
+because of $Pr_h[h(y) = h(x)] = 1/m$, so
+\begin{align}
+    \sum_{y \in S} E_h[I(y)] = \sum_{y \in S} Pr_h[h(y) = h(x)] \leq n/m \leq 1
+\end{align}
+In sum,$ x \in S$ or $x \notin S $ have no influence on the expected number of elements in $L[h(x)]$.\\
+(b) if $h$ is only 2-approximately universal, 
+\begin{align}
+Pr_h[h(y) = h(x)] \leq 2/m
+\end{align}
+and the $E_h[|L[h(x)]|] $ will be:
+\begin{align}
+    E_h[|L[h(x)]|] = \sum_{y \in S} Pr_h[h(y) = h(x)] \leq 2 * n / m
+\end{align}
 \section{Hashing-2.5*}
 %wanjing
 \textbf{Question: }
@@ -146,6 +172,18 @@ Finally, Substitute into the inequality:
 
 \section{Hashing-3.2}
 %jiayi
+\textbf{Question: }
+If $h$ is c-approximately strongly universal, what is an upper bound on the pairwise event probability,
+\begin{aligned}
+&Pr[h(x) = q ∧ h(y) = r]?
+\end{aligned}
+
+\textbf{Answer:}
+As $h$ is c-approximately strongly universal, 
+\begin{align}
+    Pr[h(x) = q ∧ h(y) = r] = Pr[h(x) = q] ∧ Pr[h(y) = r]\leq c^2/m^2
+\end{align}
+So, the upper bound of it is $c^2/m^2$
 
 \section{Hashing-3.3* }
 % you must prove that the collision probability is at most c/m. It is not sufficient to prove c²/m
@@ -222,6 +260,26 @@ We can see when $a=2^{w-2*l}$, there will be a possibility of $h(x) = h(y)$, whe
 
 \section{Hashing-3.6}
 %jiayi
+\textbf{Question:}
+Suppose that $|A| = 100,000,000$ and $p = t/m = 1/100$. Then $E[X] = µ = 1,000,000$. Give an upper bound for the probability that $|X - µ| \geq 10,000$. These numbers correspond to a 1\% sampling rate and a 1\% error. 
+The bound from (11) is good for predicting range of outcomes, but often what we have is an experiment giving us a concrete value for our random variable $X$, and now we want some confidence interval for the unknown mean $µ$ that we are trying to estimate.
+
+\textbf{Answer:}
+According to Lemma 3.2 which is (11)
+\begin{align}
+    Pr[|X - µ| \geq q\sqrt{µ}] \leq 1 / q^2
+\end{align}
+So 
+
+\begin{equation}
+\begin{aligned}
+    &Pr[|X - µ| \geq 10000]\\
+    &=  Pr[|X - µ| \geq 1000 *\sqrt{µ}]\\
+    & \leq 1/1000^2\\
+    &= 1/1000000
+\end{aligned}
+\end{equation}
+The upper bound is 1/1000000.
 
 \section{Complexity-34.1-1}
 %wanjing
@@ -296,6 +354,17 @@ That is an exponential-time algorithm.
 
 \section{Complexity-34.2-6}
 %jiayi
+\textbf{Question:}
+A \textbf{hamiltonian path} in a graph is a simple path that visits every vertex exactly once. Show that the language \textbf{HAM-PATH} = \{$<G, u, v>$: there is a hamiltonian path from $u$ to $v$ in graph G\} belongs to \textbf{NP}.
+
+\textbf{Answer:}
+Suppose that, there is a HAM-PATH from $u$ to $v$ in graph G and the path is: ($u, v_1, v_2,...,v_n, v$)\\
+In the road, there is a edge between every two neighboring vertexes above, and there are $n+2$ vertexes in $G$.\\
+To verify the certificate in polynomial time:\\
+1 check if $v_i == v$ or $v_i == u$, need to spend a constant time.
+2 check whether the $v_i$ exactly appears once, use a set to do this need to spend a constant time too.\\
+3 check if there is a edge between $v_{i-1}$ and $v_i$, this is a constant time operation too if we use data structure like a two-dimensional array.\\
+So, the \textbf{HAM-PATH} = \{$<G, u, v>$: there is a hamiltonian path from $u$ to $v$ in graph G\} belongs to \textbf{NP}.
 
 \section{Complexity-34.2-8}
 %wanjing
