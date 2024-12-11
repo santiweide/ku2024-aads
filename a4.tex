@@ -68,6 +68,9 @@ Thus such $f$ exists for any $L' \in P$, $L' \le_\text{P} L$. And $L$ is complet
 \textbf{Question: }Professor Jagger proposes to show that \(SAT \leq_P 3-CNF-SAT \) by using only the truth-table technique in the proof of Theorem 34.10, and not the other steps. That is, the professor proposes to take the boolean formula \(\phi\), form a truth table for its variables, derive from the truth table a formula in 3-DNF that is equivalent
 to: \(\lnot\phi\), and then negate and apply DeMorgan’s laws to produce a 3-CNF formula
 equivalent to \(\phi\). Show that this strategy does not yield a polynomial-time reduction.
+\\
+\\
+This strategy uses only one step, which is the truth table. To build the truth table without using the binary tree, we need \(O(2^n)\) time which n is the number of variables because building the truth table requires enumerating all possible combinations of variable assignments. So it's exponential.
 
 \section{34.4-6}
 %wenshuo
@@ -108,7 +111,15 @@ From above we can see the ILP is NP-complete.
 
 \section{34.5-6}
 %zhigao
-\textbf{Question: }Show that the hamiltonian-path problem is NP-complete.
+\textbf{Question: }Show that the hamiltonian-path problem is NP-complete.\\
+\textbf{Proof: } First, we need to prove that hamiltonian-path problem is an NP problem.
+Given a graph \(G(V,E)\), the certificate is the sequence of \(|V|\) vertices that makes up the hamiltonian path. To chack the certificate, the algorithm is, firstly check each vertices in \(|V|\) are contained in the sequence. And finally check that there is an edge between each pair of consecutive vertices. So the time complexity is \(O(|V|)\) which means we can verify the certificate in polynomial time. Hence, hamiltonian-path is an NP problem.
+\\
+\\
+Now we need to prove that \(HAM-CYCLE \leq_p HAM-PATH\) since we know the hamiltonian cycle problem is NP-complete. Given a graph \(G(V,E)\) , and construct a graph \(G'(V',E')\). \(V'= V\cup\{s\}\) which means add a new point \(s\) in graph \(G\), \(E' = E \cup\{(s,v)| v\in V\}\) which means add an edge for each point from point \(s\) to each point in \(G\). 
+Now, if there is a hamiltonian cycle \(C=v_1\rightarrow v_2\rightarrow\ ... \rightarrow v_n\rightarrow v1\) in graph G, then we can get a hamiltonian-path \(P= s\rightarrow v_2\rightarrow\ ... \rightarrow v_n\) in graph \(G'\). So we prove that hamiltonian cycle problem can be reduced to hamiltonian-path problem and this reduction can be done in polynomial time.
+
+
 
 \section{34.5-7}
 %wenshuo
