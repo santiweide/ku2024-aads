@@ -87,15 +87,23 @@ Assume that $x \notin S$ and that $h$ is universal. Let $I(y)$ be an indicator v
 (b) What bound do you get if $h$ is only 2-approximately universal? (assume $x$ is not in $S$)
 
 \textbf{Answer}
+
 (a) similar to the suppose of the question, assume that $x \in S$, $h$ is universal and $I(y)$ be the indicator.
-\begin{align}
-    E_h[|L[h(x)]|] = E_h [\sum_{y\in S} I(y)]  = \sum_{y \in S} E_h[I(y)]
-\end{align}
-because of $Pr_h[h(y) = h(x)] = 1/m$, so
-\begin{align}
-    \sum_{y \in S} E_h[I(y)] = \sum_{y \in S} Pr_h[h(y) = h(x)] \leq n/m \leq 1
-\end{align}
-In sum,$ x \in S$ or $x \notin S $ have no influence on the expected number of elements in $L[h(x)]$.\\
+
+because of $x \in S$, so $Pr_h[h(y) = h(x)] = 1/m$ when $x \neq y$, and $I(y)= 1$ when $x = y$\\
+
+so $E_h[|L[h(x)]|]$ can be divided into two parts:
+\begin{equation}
+\begin{aligned}
+    &E_h[|L[h(x)]|] \\
+    &= E_h[I(x)]+ E_h [\sum_{y\in S, x \neq y} I(y)]  \\
+    &= 1 + \sum_{y \in S, x \neq y} E_h[I(y)]\\
+    &\leq 1 + (n - 1)/m
+\end{aligned}
+\end{equation}
+
+So the expected number of elements in $L[h(x)]$ if $x \in S$ is $1 + (n - 1) / m$.
+
 (b) if $h$ is only 2-approximately universal, 
 \begin{align}
 Pr_h[h(y) = h(x)] \leq 2/m
@@ -320,25 +328,26 @@ To estimate the size of the symmetric difference \( |(B \setminus C) \cup (C \se
 \section{Hashing-3.6}
 %jiayi
 \textbf{Question:}
-Suppose that $|A| = 100,000,000$ and $p = t/m = 1/100$. Then $E[X] = µ = 1,000,000$. Give an upper bound for the probability that $|X - µ| \geq 10,000$. These numbers correspond to a 1\% sampling rate and a 1\% error. 
-The bound from (11) is good for predicting range of outcomes, but often what we have is an experiment giving us a concrete value for our random variable $X$, and now we want some confidence interval for the unknown mean $µ$ that we are trying to estimate.
+Suppose that $|A| = 100,000,000$ and $p = t/m = 1/100$. Then $E[X] = \mu = 1,000,000$. Give an upper bound for the probability that $|X - \mu| \geq 10,000$. These numbers correspond to a 1\% sampling rate and a 1\% error. 
+The bound from (11) is good for predicting range of outcomes, but often what we have is an experiment giving us a concrete value for our random variable $X$, and now we want some confidence interval for the unknown mean $\mu$ that we are trying to estimate.
 
 \textbf{Answer:}
 According to Lemma 3.2 which is (11)
 \begin{align}
-    Pr[|X - µ| \geq q\sqrt{µ}] \leq 1 / q^2
+    Pr[|X - \mu| \geq q\sqrt{\mu}] \leq 1 / q^2
 \end{align}
+And as \,$\mu = 1,000,000$,\\
 So 
 
 \begin{equation}
 \begin{aligned}
-    &Pr[|X - µ| \geq 10000]\\
-    &=  Pr[|X - µ| \geq 1000 *\sqrt{µ}]\\
-    & \leq 1/1000^2\\
-    &= 1/1000000
+    &Pr[|X - \mu| \geq 10000]\\
+    &=  Pr[|X - \mu| \geq 10 *\sqrt{\mu}]\\
+    & \leq 1/10^2\\
+    &= 1/100
 \end{aligned}
 \end{equation}
-The upper bound is 1/1000000.
+The upper bound is 1/100.
 
 \section{Complexity-34.1-1}
 %wanjing
