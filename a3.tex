@@ -235,7 +235,7 @@ So, the upper bound of it is $c^2/m^2$
 
 \section{Hashing-3.3* }
 % you must prove that the collision probability is at most c/m. It is not sufficient to prove c²/m
-%wanjing
+%wanjing TODO
 \textbf{Question: }
 Argue that if $h: U \rightarrow [m]$ is c-approximately strong universal, then h is also c-approximately universal.
 
@@ -350,7 +350,7 @@ So
 The upper bound is 1/100.
 
 \section{Complexity-34.1-1}
-%wanjing
+%wanjing 
 \textbf{Question}
 Define the optimization problem $LONGEST-PATH-LENGTH$ as the relation that associates each instance of an undirected graph and two vertices with the number of edges in a longest simple path between the two vertices. Define the decision problem $LONGEST-PATH= \{\langle G, u, v, k\rangle: G = (V, E)$ is an undirected graph, $u, v \in V, k \ge 0$ is an integer, and there exists a simple path from $u$ to $v$ in $G$ consisting of at least $k$ edges $\}$. Show that the optimization problem $LONGEST-PATH-LENGTH$ can be solved in polynomial time if and only if $LONGEST-PATH \in P$.
 
@@ -376,29 +376,15 @@ Assume the $LONGEST-PATH \subseteq P$, and we apply binary search for finding th
 Since the decision problem runs in polynomial time, and binary search over $|V|$ iterations requires at most $O(\log |V|)$ queries, the entire process is polynomial in the size of the graph.
 
 \subsection{Proof of B}
-Assume the $LONGEST-PATH-LENGTH \subseteq P$, and then we apply deep first search. The Algorithm steps as follows:
- 
-\textbf{Initialize} Push a tuple $<u, 0, path>$ to a Stack $S$, where path is an empty string. Set the result path vector $res$ to be empty. The begin a loop, while $S$ is not empty:
+Assume the $LONGEST-PATH-LENGTH \subseteq P$, and we have a polynomial time algorithm A that computes the length of the longest simple path between $u$ and $v$ in $G$. We do the following steps:
 
-\textbf{Step1} Pop one tuple of $<vertex, counter, path>$ from $S$, note as $<s, c>$. 
+\textbf{Step1} Input to $LONGEST-PATH$: $G, u, v, k$
+\textbf{Step2} Compute $l=A(G,u,v)$, the length f the longest simple path between $u,v$
+\textbf{Step3} If $l \ge k$ output YES, means a simple path of at least $k$ edges exists; Otherwise output NO.
 
-\textbf{Step2} Run the $LONGEST-PATH-LENGTH$ to compute the longest path length $len$ between $s$ and $v$, which costs polynomial-time.
+\textbf{Complexity}: Since $LONGEST-PATH-LENGTH \subseteq P$, $A \in P$. Also checking $l \ge k$ is in polynomial time.
 
-\textbf{Step3} If $len \geq k-c$, for all the vertex $s'$ that having an edge out of $s$, push $<s', c+1, path+s>$ into $S$.
-
-\textbf{Step4} If $s = v$ and $c \ge k$, then $path + v$ is an possible answer, and we can break the loop.   
-
-\textbf{Step5} When the loop is end and there is no answer output, there is no max length path.
-
-\textbf{Complexity Analysis}
-
- $LONGEST-PATH-LENGTH$ runs in polynomial time by assumption.
-
-The DFS runs in $O(|V| + |E|)$ time.
-
-Overall, the algorithm runs in polynomial time because the DFS and path length comparison are polynomial operations.
-
-
+Thus $LONGEST-PATH \in P$.
 
 \section{Complexity-34.1-5}
 %zhigao
@@ -492,9 +478,9 @@ So to verify $TAUTOLOGY \in co-NP$ we need to prove $\overline{TAUTOLOGY} \in NP
  
 %We find that the $\phi$ could be transformed into a graph with input variables as the edges, and the negations ($\neg$), ANDs ($\vee$), ORs ($\wedge$) as vertices. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclic graph from starting point to ending point.
  
-We construct algorithm $A$ with inputs $x$ and $y$.  $A$ checks that $x$ represents a boolean combination in$phi$  with one output result and $y$ represents an assignment of truth values to the result of $\phi$.
+%We construct algorithm $A$ with inputs $x$ and $y$.  $A$ checks that $x$ represents a boolean combination in$phi$  with one output result and $y$ represents an assignment of truth values to the result of $\phi$.
 
-Suppose we create a directed graph $G=(V,E)$ with one vertex for each combinational element and with k directed edges for each vertex whose fan-out is k; the graph contains a directed edge $(u,v)$, if a wire connects the output of element $u$ to an input of element $v$. Then G must be acyclic. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclic graph from starting point to ending point.
+%Suppose we create a directed graph $G=(V,E)$ with one vertex for each combinational element and with k directed edges for each vertex whose fan-out is k; the graph contains a directed edge $(u,v)$, if a wire connects the output of element $u$ to an input of element $v$. Then G must be acyclic. Then the evaluation of the $\phi$ could be done in polynomial time as it is the same as finding paths on an acyclic graph from starting point to ending point.
 
 \subsection{Certificate}
 The certificate for $\overline{TAUTOLOGY}$ is the assignment $(x_1,x_2,...,x_k) \in {0,1}^k$ such that $\phi(x_1,x_2,...,x_k) = 0$.
