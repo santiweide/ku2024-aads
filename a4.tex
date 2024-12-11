@@ -74,6 +74,34 @@ This strategy uses only one step, which is the truth table. To build the truth t
 
 \section{34.4-6}
 %wenshuo
+\textbf{Question:}\\
+Suppose that someone gives you a polynomial-time algorithm to decide formula
+satisfiability. Describe how to use this algorithm to find satisfying assignments in
+polynomial time.\\
+\textbf{Answer:}\\
+Given a Boolean formula \( \phi \) in Conjunctive Normal Form (CNF) and a polynomial-time decision procedure for satisfiability (SAT-D), the following steps can be used to find a satisfying assignment in polynomial time:
+
+\begin{enumerate}
+    \item \textbf{Input:} A Boolean formula \( \phi \) with variables \( x_1, x_2, \ldots, x_n \).
+    \item \textbf{Run the SAT-D algorithm:}
+    \begin{itemize}
+        \item Evaluate \( \text{SAT-D}(\phi) \). If \( \phi \) is unsatisfiable, output "No satisfying assignment exists" and terminate.
+        \item Otherwise, go to the next step.
+    \end{itemize}
+    \item \textbf{Iterate over each variable:}
+    \begin{enumerate}
+        \item For each variable \( x_i \):
+        \begin{enumerate}
+            \item Assign \( x_i = \text{True} \) and create a modified formula \( \phi_{x_i=\text{True}} \) by substituting \( x_i = \text{True} \) in \( \phi \).
+            \item Run \( \text{SAT-D}(\phi_{x_i=\text{True}}) \):
+            \begin{itemize}
+                \item If \( \phi_{x_i=\text{True}} \) is satisfiable, keep \( x_i = \text{True} \).
+                \item Otherwise, \( x_i = \text{False} \).
+            \end{itemize}
+        \end{enumerate}
+    \end{enumerate}
+    \item \textbf{Output:} After iterating through all variables, the constructed assignment \( (x_1, x_2, \ldots, x_n) \) satisfies \( \phi \).
+\end{enumerate}
 
 \section{34.5-1}
 %for 34.5-1, the definition of "isomorphic graphs" can be found in Appendix B
@@ -123,5 +151,44 @@ Now, if there is a hamiltonian cycle \(C=v_1\rightarrow v_2\rightarrow\ ... \rig
 
 \section{34.5-7}
 %wenshuo
+\textbf{Question:}\\
+The longest-simple-cycle problem is the problem of determining a simple cycle (no repeated vertices) of maximum length in a graph. Formulate a related decision problem, and show that the decision problem is NP-complete.\\
+\textbf{Answer:}\\
+Longest-Simple-Cycle Decision Problem (LSCD):
+\begin{itemize}
+    \item \textbf{Instance:} A graph \( G = (V,E) \) (undirected or directed) and a positive integer \( k \leq |V| \).
+    \item \textbf{Question:} Does \( G \) contain a simple cycle (a cycle with no repeated vertices) of length at least \( k \)?
+\end{itemize}
+To prove that LSCD is in NP:
+\begin{itemize}
+    \item \textbf{Certification:} If the answer is "yes," a certificate is the simple cycle itself, i.e., a sequence of vertices \( (v_1, v_2, \ldots, v_m) \) that forms a cycle with no repeated vertices and \( m \geq k \).
+    \item \textbf{Verification:} Given this sequence, we can verify in polynomial time that:
+    \begin{enumerate}
+        \item Each pair \( (v_i, v_{i+1}) \) (and \( (v_m, v_1) \)) is an edge in \( E \).
+        \item All \( v_i \) are distinct.
+        \item The length \( m \) is at least \( k \).
+    \end{enumerate}
+\end{itemize}
+Since these checks can be done in polynomial time, LSCD is in NP.\\
+To prove that LSCD is NP-hard, we reduce from the Hamiltonian Cycle problem, which is known to be NP-complete.\\
+Hamiltonian Cycle Problem:
+\begin{itemize}
+    \item \textbf{Instance:} A graph \( G' = (V', E') \).
+    \item \textbf{Question:} Does \( G' \) contain a simple cycle of length \( |V'| \)? Such a cycle must visit every vertex exactly once.
+\end{itemize}
+Given an instance \( G' = (V', E') \) of the Hamiltonian Cycle problem, we construct an instance of LSCD as follows:
+\begin{itemize}
+    \item Let \( G = G' \).
+    \item Set \( k = |V'| \).
+\end{itemize}
+This is a polynomial-time reduction since it involves no complicated transformations just pass the same graph \( G' \) and let \( k = |V'| \).
+\begin{itemize}
+    \item If \( G' \) has a Hamiltonian cycle, then \( G \) has a simple cycle of length \( |V'| \). Thus, the LSCD instance \( (G, k) \) with \( k = |V'| \) is a "yes" instance.
+    \item If \( G' \) does not have a Hamiltonian cycle, then there is no simple cycle visiting all \( |V'| \) vertices in \( G \). Thus, the LSCD instance \( (G, |V'|) \) is a "no" instance.
+\end{itemize}
+Because the Hamiltonian Cycle problem is a special case of LSCD (obtained by setting \( k = |V| \)), any polynomial-time solution to LSCD would also solve the Hamiltonian Cycle problem. Since the Hamiltonian Cycle problem is NP-complete, LSCD must be NP-hard.\\\\
+Therefore, LSCD is NP-complete.
+
+
 
 \end{document}
