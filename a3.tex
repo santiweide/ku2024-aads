@@ -284,7 +284,37 @@ Pr[h(x)=h(y)] \neq \frac{1}{m}
 \end{aligned}
 \end{equation}
 
-and the deviation cannot be bounded by any constant factor c since $h(0)$ is deterministic.
+and the deviation cannot be bounded by any constant factor c since $h(0)$ is deterministic.\\
+\\
+Suppose $m = 4$ and the hash value range is $\{0, 1, 2, 3\}$. Consider the following:
+\begin{itemize}
+    \item $x = 0$, so $h(0) = 0$,
+    \item For a specific $y \neq 0$, assume $h(y)$ is distributed such that:
+    \[
+    P[h(y) \in \{0, 1\}] = 0.8, \quad P[h(y) \in \{2, 3\}] = 0.2.
+    \]
+    This implies a non-uniform distribution for $h(y)$.
+\end{itemize}
+Now, consider the joint event $h(0) = 0 \wedge h(y) = 0$:
+\[
+P[h(0) = 0 \wedge h(y) = 0] = P[h(y) = 0].
+\]
+From the assumed distribution:
+\[
+P[h(y) = 0] = 0.4.
+\]
+Compare this to the required bound for $c$-approximately strong universality:
+\[
+P[h(0) = 0 \wedge h(y) = 0] \leq \frac{c}{m^2}.
+\]
+For $c = 1$ and $m = 4$:
+\[
+\frac{c}{m^2} = \frac{1}{16}.
+\]
+Clearly:
+\[
+P[h(0) = 0 \wedge h(y) = 0] = 0.4 > \frac{1}{16}.
+\]
 
 \section{Hashing-3.5}
 %wenshuo
