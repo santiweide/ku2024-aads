@@ -272,36 +272,31 @@ So we have
 \section{Hashing-3.4*}
 \textbf{Question:} Is Multiply-Shift c-approximately strongly universal for any constant c?
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
-%zhigao... wanjing done but...not sure....
+%zhigao... wanjing done but...not sure.... 
 \textbf{Question} Is Multiply-Shift c-approximately strongly universal for any constant c?
 
 \textbf{Answer}
-No. Here we have found a possible pair of $x$ and $y$ that contradicts the definition of strong universality.
+No. 
 
-According to the Observation3.1 in the textbook, an equivalent definition of strong universality is that each key is hashed uniformly into [m], and that every two distinct keys are hashed independently.
-
-For $x$ we have 
+For $x=0$ we have 
 
 \begin{equation}
 \begin{aligned}
-h(x) = \lfloor \frac{a * x \mod 2^w}{2^{w-l}} \rfloor
+h(0) = \lfloor \frac{a * 0 \mod 2^w}{2^{w-l}} \rfloor = 0
 \end{aligned}
 \end{equation}
 
-Pick $y=x+2^{l}$, we have :
+Which means $h(0)$ is always hased to 0 regardless of the choice of $a$. 
+
+Thus the Multiply-Shift hash function cannot be strongly universal, or even c-approximately strongly universal for any constant c, because:
+
 \begin{equation}
 \begin{aligned}
-h(y) &= \lfloor \frac{a*(x+2^l)  \mod 2^w }{2^{w-l}} \rfloor \\
-&= \lfloor \frac{a*x \mod 2^w + a * 2^l \mod \, 2^w }{2^{w-l}} \rfloor \\
-&= \lfloor \frac{a*x \mod 2^w + a * 2^l }{2^{w-l}} \rfloor \\
-&= \lfloor \frac{a*x \mod 2^w }{2^{w-l}}  + a * 2^{2*l-w} \rfloor \\
+Pr[h(x)=h(y)] \neq \frac{1}{m}
 \end{aligned}
 \end{equation}
 
-We can see when $a=2^{w-2*l}$, there will be a possibility of $h(x) = h(y)$, when the floor is passed, and thus not all pairs of distinct keys will hash indepedently.
-
-
-
+and the deviation cannot be bounded by any constant factor c since $h(0)$ is deterministic.
 
 \section{Hashing-3.5}
 %wenshuo
