@@ -161,17 +161,6 @@ Suppose we for our hash function also consider a = 0, that is, for random \((a, 
 \[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m}\]
 
 (a) Show that this function may not be universal.\\
-
-
-For this question, I need to show that in some cases:
-\[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] > 1/m\]
-Consider a = 0, we can get:
-\[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m} = (b\mod{p} )\mod{m}\]
-In that case:
-\[h_{0,b}(x) = (b\mod{p} )\mod{m}\]
-\[h_{0,b}(y) = (b\mod{p} )\mod{m}\]
-we can see the value of \(h_{a,b}(x)\) is only depending on b, and the collision probability is 1.\\
-\\
 (b) Prove that it is always 2-approximately universal, that is, for any distinct \(x, y \in [p]\), 
 \[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] < 2/m\]
 
@@ -273,7 +262,6 @@ So we have
 \textbf{Question:} Is Multiply-Shift c-approximately strongly universal for any constant c?
 % hint: the answer is no, because not all pairs of keys hash independently - your job is to prove this.
 %zhigao... wanjing done but...not sure.... 
-\textbf{Question} Is Multiply-Shift c-approximately strongly universal for any constant c?
 
 \textbf{Answer}
 No. 
@@ -386,10 +374,12 @@ Thus $LONGEST-PATH \in P$.
 \textbf{Question:} Show that if an algorithm makes at most a constant number of calls to polynomial-time subroutines and performs an additional amount of work that also takes polynomial time, then it runs in polynomial time. Also show that a polynomial number of
 calls to polynomial-time subroutines may result in an exponential-time algorithm.\\
 \textbf{Proof:}\\
-For a polynomial-time subroutine, the running time is \(O(n^k)\), and if an algorithm calls it a constant number \(c\) times and does an additional amount of polynomial-time work, the total running time of this algorithm is:
-\[T(n) = c \cdot O(n^k) + O(n^x)\]
-\[T(n) = O(n^{\max(k,x)}) \]
-So this algorithm is also running in polynomial time. \\
+For a polynomial-time subroutine, If we call it constant number C times, we get:
+\[T(n) = O(n^{d_1}) + O(n^{d_1}) + ...+O(n^{d_c}) + O(n^x) \]
+We can see, that even if The input is growing, then since the call is constant times, the final result \(d_c\) is still a constant.
+Hence,
+\[T(n) = O(n^{d_c}) + O(n^x)\]
+That is also in polynomial-time.
 For the second question, consider every time the algorithm calls the polynomial-time subroutines, we have \(n->n^2\), and we set the algorithm calls the polynomial-time subroutines \(n\) (polynomial number) times.
 Hence the total running time of this algorithm is:
 \[T(n) = O(n) + O(n^2) + ...+O(n^{2n-1}) + O(n^x) \]
