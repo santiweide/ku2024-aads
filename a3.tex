@@ -229,32 +229,25 @@ So, the upper bound of it is $c^2/m^2$
 Argue that if $h: U \rightarrow [m]$ is c-approximately strong universal, then h is also c-approximately universal.
 
 \textbf{Answer}
-The collision probability of the c-approximately strong universal is 
+The collision probability of the c-approximately strong universal is for any $x \neq y \in U$:
 
 \begin{equation}
 \begin{aligned}
 &Pr[h(x)=h(y)] \\
-&= \sum_{q \in [m]} Pr[h(x) = q \, and \, h(y) = q]\\
-&= \sum_{q \in [m]} Pr[h(x) = q \, and \, h(y) = h(x)]\\
-&=\sum_{q \in [m]} Pr[h(x) = q] * Pr[h(y) = h(x)]\\
-&=\sum_{q \in [m]} Pr[h(x) = q] *1/m
+&= \sum_{q \in [m]} Pr[h(x) = q \, \land \, h(y) = q]\\
+&=\sum_{q \in [m]} Pr[h(x) = q] * Pr[h(y) = q]\\
 \end{aligned}
 \end{equation}
 
-For the last equation we use the independency property of c-approximately universal. And we also have:
-\begin{equation}
-\begin{aligned}
-Pr[h(x) = q] &<= \frac{c}{m} \\
-\end{aligned}
-\end{equation}
+For c-approximately strong university, $Pr[h(x) = q] \leq \frac{c}{m}$ and $Pr[h(y) = q] \leq \frac{c}{m}$ hold for all $z \in [m]$
 
 So we have
 \begin{equation}
 \begin{aligned}
 &Pr[h(x)=h(y)] \\
-&= \sum_{q \in [m]} Pr[h(x) = q] * 1/m\\
-&<=\sum_{q \in [m]}   \frac{c}{m^2}
-= \frac{c}{m}
+&= \sum_{q \in [m]} c/m * c/m\\
+&<=\sum_{q \in [m]}   \frac{c^2}{m^2}
+= \frac{c^2}{m}
 \end{aligned}
 \end{equation}
 
