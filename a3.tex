@@ -161,16 +161,21 @@ Suppose we for our hash function also consider a = 0, that is, for random \((a, 
 \[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m}\]
 
 (a) Show that this function may not be universal.\\
-
-
-For this question, I need to show that in some cases:
+To prove this function not be universal, it is equal to prove:\\
+for each $x\neq y \in U$\\
 \[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] > 1/m\]
-Consider a = 0, we can get:
-\[h_{a,b}(x) = ((ax + b)\mod{p} )\mod{m} = (b\mod{p} )\mod{m}\]
-In that case:
-\[h_{0,b}(x) = (b\mod{p} )\mod{m}\]
-\[h_{0,b}(y) = (b\mod{p} )\mod{m}\]
-we can see the value of \(h_{a,b}(x)\) is only depending on b, and the collision probability is 1.\\
+And it can be divided into 2 case: $a = 0$ and $a \neq 0$ so the probability is:\\
+\begin{equation}
+    \begin{aligned}
+        &Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)]\\
+        &= Pr[a = 0]* Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y) | a = 0] \\
+        &+  Pr[a \neq 0] * Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y) | a \neq 0]\\
+        &=1/p * Pr[0 = 0] + (p - 1)/p* Pr_{a \in [p]_+, b \in [p]}[h_{a,b}(x) = h_{a,b}(y)]\\
+        &\leq 1 / p + (p - 1)/ p * 1 / m\\
+        &= 1 / m + 1 / p * ( 1 - 1 / m)
+    \end{aligned}
+\end{equation}
+But $1/m + 1/p * (1 - 1/m) > 1 / m$, so we can not get $Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] <= 1 / m$, so we can get that the function may not be universal.
 \\
 (b) Prove that it is always 2-approximately universal, that is, for any distinct \(x, y \in [p]\), 
 \[Pr_{(a,b)\in[p]^2}[h_{a,b}(x) = h_{a,b}(y)] < 2/m\]
