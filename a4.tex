@@ -28,6 +28,16 @@
 
 \section{34.2-10}
 %jiayi
+\textbf{Question}
+Prove that if NP $\neq$ co-NP,  then P $\neq$ NP.\\
+
+\textbf{Answer}
+To prove if NP $\neq$ co-NP,  then P $\neq$ NP is equal to prove if P = NP, then NP = co-NP(inverse negation).\\
+So assume that P = NP, so for each $L \in P$, $\bar{L} \in P$ ( because we can get the expect result from $\bar{L}$ by reversing the result.)\\
+Then from P = NP, we get  $\bar{L} \in NP$ and $L \in NP$.
+From the definition of co-NP, $\bar{L} \in NP$ then $L \in co-NP$.\\
+Because $L \in co-NP$ and $L \in NP$, we can get NP = co-NP, and the original proposition is valid.
+
 
 \section{34.3-6}
 %wanjing
@@ -106,6 +116,22 @@ Given a Boolean formula \( \phi \) in Conjunctive Normal Form (CNF) and a polyno
 \section{34.5-1}
 %for 34.5-1, the definition of "isomorphic graphs" can be found in Appendix B
 %jiayi
+\textbf{Question}
+The \textbf{subgraph-isomorphism problem} takes two undirected graphs $G_1$ and $G_2$, and it asks whether $G_1$ is isomorphic to a subgraph of $G_2$. Show that the subgraph-isomorphism problem is NP-complete.\\
+
+\textbf{Answer}
+From Theorem 34.11, The clique problem is NP-complete. Then we note the subgraph-isomorphism problem as \textbf{SSP} and the clique problem as \textbf{CP}.\\
+
+Firstly, prove SSP $\in$ NP.\\
+For given graphs $G_1 = (V_1, E_1)$ and $G_2 = (V_1, E_1)$ ,and a certification like a sub-graph of $G_2$ note as $G_3$, it is easily to check whether $G3$ is isomorphic to $G_1$ in polynomial time, so we get SSP $\in$ NP.\\
+
+Then, prove CP $\in$ SSP.\\
+CP: for a given $G = (V, E)$, check whether there is a clique $C$ of size $k$ in $G$.\\
+In SSP, if we consider $G_2$ as $G$ in CP, and $G_1$ as $C$ in CP, then the answer of the CP will be the same as the answer of SSP. So we can reduce a SSP to a CP.\\
+
+Since CP is NP-complete, we can get SSP is NP-complete.
+
+
 
 \section{34.5-3}
 %wanjing
