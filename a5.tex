@@ -83,6 +83,55 @@ Thus we need $n \ge u/ \lg \lg u$, which is $\displaystyle \left \lceil \frac{u}
 
 \section{Exact and FPT Algorithms - Exercise4}
 %wanjing
-%  Note: In Exercise 4b the running times we want are O(m+n+2^k * k^2)
+%Note: In Exercise 4b the running times we want are $O(m+n+2^k k^2)$ or if you can $O(m+n+2^k)$. You can use the BFP-Kernel(k,g) function from my slides as a subroutine, and may assume you may use without proof that for any $c \in R$ and $f(n) \in O(n^c)$, we have $\sum_{i=0}^{k} 2^{i} f(k-i) \in O(2^k)$.
+
+\textbf{(a)}
+
+For kernalization we remove the neighbours of the vertice whose degree are over k. We travel the vertices and edges of each vertex, costing $O(|V| + |E|)$. 
+
+For identifying the subset $U$, we need to enumerate the subsets $C \in U$ and check whether they are valid vertex cover. After the kerneralization, $|U| = O(k^2)$, so the enumeration costs $O(2^{O(k^2)})$.
+
+Also we have to check if $C$ is a valid vertex cover after each identifying of $C$. We can validate in time $O(|E|)$ by traveling all the edges in that are avaliable after the kernalization. So the cost is $O(|E|)=O(k^2)$.
+
+To sum up the upper bound on the running time is:
+
+\begin{equation}
+O(|V| + |E|) + O(2^{O(k^2)}) * O(k^2)
+\end{equation}
+
+If we consider the time it takes to identify U and the time it takes to check that a given $C \subseteq U$ is indeed a vertex cover of G \textbf{ONLY}, that will be
+
+\begin{equation}
+\begin{aligned}
+&O(2^{O(k^2)}) * O(k^2)
+&=O^*(2^{O(k^2)}) 
+\end{aligned}
+\end{equation}
+
+
+\textbf{(b) - $O(m+n+2^k k^2)$ Solution}
+
+%for any $c \in R$ and $f(n) \in O(n^c)$, we have $\sum_{i=0}^{k} 2^{i} f(k-i) \in O(2^k)$
+
+First we use BFP-Kernel(k,G) to reduce the graph in $O(m+n)$ time, where $m=|V|, n=|E|$. After the kernalization, $|V|=O(k^2)$, $|E|=O(k^2)$.
+
+Then we apply Bounded Search Tree on the kernel. Each branch performs work proportional to $f(k-i)=O(k^2)$ for some $i$ meaning the depth. The $f(k-i)$ means the cost of maintaining or updating the kernel, for example removing vertices or edges, checking constraints.
+
+And the total running time across the branches is:
+
+\begin{equation}
+\sum_{i=0}^{k} 2^i f(k-i) = O(2^k k^2)
+\end{equation}
+
+So the overall time cost is $O(m+n)+O(2^k k^2) = O(m+n+2^k k^2)$.
+
+\textbf{(b) - $O(m+n+2^k)$ Solution(Not solved...)}
+
+%for any $c \in R$ and $f(n) \in O(n^c)$, we have $\sum_{i=0}^{k} 2^{i} f(k-i) \in O(2^k)$
+We try to reduce the kernel along doing the Bounded Search Tree and do the lazy updates.
+
+We mark the vertices or edges as removed in $O(1)$ in the bitmap, when the vertex degree is greater than $k$.
+
+TBD
 
 \end{document}
