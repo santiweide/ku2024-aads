@@ -32,6 +32,13 @@
 
 \section{20.3-1}
 % wanjing
+\textbf{Question: } 
+Creating a vEB tree with universe size $u$ 
+
+\textbf{Answer:}
+We need an extra 64-bit integer representing how many elements are there in the vEB in each entries of its array( naming it the count value). Also for the max and min, we have each an extra  64-bit integer representing how many elements are equals to the max and min. 
+
+The count value changes into 1 whenever the entry value changes into another number. It adds one on every insert operation and the value equals the entry value.
 
 \section{20.3-2}
 %zhigao
@@ -45,6 +52,25 @@
 
 \section{20.3-6}
 %wanjing
+\textbf{Question: } 
+Creating a vEB tree with universe size $u$ requires $O(u)$ time. Suppose we wish to explicitly account for that time. What is the smallest number of operations $n$ for which the amortized time of each operation in a vEB tree is $O(\lg\lg u)$?
+
+\textbf{Answer:}
+
+Performing $n$ operations a vEB tree takes $O(u) + n*O(\lg\lg u)$ time. Using the aggregate amortized analysis, we divide by $n$ to see that the amortized cost of each operations  per operation is:
+
+\begin{equation}
+Amortized \, per \, operation = \frac{O(u)}{n} + O(\lg\lg u) 
+\end{equation} 
+
+Since the amortized cost is $O(\lg \lg u)$, the initializing operation of $O(u)$ must spread out across  the n operations such that the per-operation contribution of $O(u)/n$ is asymptotically $O(\lg \lg u)$. Its means:
+
+\begin{equation}
+\frac{O(u)}{n}=O(\frac{u}{n}) = O( \lg \lg u)
+\end{equation}
+
+Thus we need $n \ge u/ \lg \lg u$, which is $\displaystyle \left \lceil \frac{u}{\lg\lg u} \right \rceil$ operations.
+
 
 \section{Exact and FPT Algorithms - Exercise1}
 %zhigao
@@ -57,5 +83,6 @@
 
 \section{Exact and FPT Algorithms - Exercise4}
 %wanjing
+%  Note: In Exercise 4b the running times we want are O(m+n+2^k * k^2)
 
 \end{document}
