@@ -42,8 +42,12 @@ The count value changes into 1 whenever the entry value changes into another num
 
 \section{20.3-2}
 %zhigao
-\textbf{Question:} Modify vEB trees to support keys that have associated satellite data.
+\textbf{Question:} Modify vEB trees to support keys that have associated satellite data.\\
+\textbf{Answer:} For any keys, if it is the minimum on some nodes, we need to store the pointer of this key additionally. That is, for non-summary nodes, in addition to storing min also store a pointer(to satellite data) to min since it will not appear after this node.
+For a VEB tree of size 2 (only two elements), then also store the pointer to the maximum value. If min = max, the pointer should be associated with the same data. 
 
+
+For other keys, it is sufficient to simply store the pointer at the location where it appears.
 \section{20.3-3}
 %wenshuo
 
@@ -75,6 +79,9 @@ Thus we need $n \ge u/ \lg \lg u$, which is $\displaystyle \left \lceil \frac{u}
 
 \section{Exact and FPT Algorithms - Exercise1}
 %zhigao
+\textbf{Question:} What is the space needed for the \(O^*(2n)\) time TSP algorithm in Fomin-Kratsch?\\
+\textbf{Answer:} The space we need is also exponential since we need to keep all values \(OPT[S,ci]\) for all sets of size \(j\) and \(j+1\). At most we have \(O(2^n)\) for each j, So the space we need is \(O^*(2^n)\)
+
 
 \section{Exact and FPT Algorithms - Exercise2}
 %wenshuo
