@@ -240,7 +240,6 @@ So, the upper bound of it is $c^2/m^2$
 
 \section{Hashing-3.3* }
 % you must prove that the collision probability is at most c/m. It is not sufficient to prove c²/m
-%wanjing TODO
 \textbf{Question: }
 Argue that if $h: U \rightarrow [m]$ is c-approximately strong universal, then h is also c-approximately universal.
 
@@ -261,9 +260,10 @@ So we have
 \begin{equation}
 \begin{aligned}
 &Pr[h(x)=h(y)] \\
-&= \sum_{q \in [m]} c/m * c/m\\
-&<=\sum_{q \in [m]}   \frac{c^2}{m^2}
-= \frac{c^2}{m}
+&=\sum_{q \in [m]} Pr[h(x) = q] * Pr[h(y) = q]\\
+&= \sum_{q \in [m]} c/m * Pr[h(y) = q]\\
+&<= c/m * 1
+= \frac{c}{m}
 \end{aligned}
 \end{equation}
 
