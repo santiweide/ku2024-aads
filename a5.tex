@@ -5,6 +5,8 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \newenvironment{statement}[2][Statement]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
 \usepackage{xcolor}
@@ -50,7 +52,34 @@ For a VEB tree of size 2 (only two elements), then also store the pointer to the
 For other keys, it is sufficient to simply store the pointer at the location where it appears.
 \section{20.3-3}
 %wenshuo
-
+\textbf{Question: }Write pseudocode for a procedure that creates an empty van Emde Boas tree.\\
+\textbf{Answer: }
+\begin{algorithm}
+\caption{VEB-CREATE(u)}
+\begin{algorithmic}[1]
+\Procedure{VEB-CREATE}{u}
+    \State $T \gets \text{new VEB\_Tree}$
+    \State $T.u \gets u$
+    \State $T.\text{min} \gets \text{NIL}$
+    \State $T.\text{max} \gets \text{NIL}$
+    
+    \If{$u > 2$}
+        \State $\text{clusterSize} \gets \sqrt{u}$
+        \State $T.\text{summary} \gets \text{VEB-CREATE}(\text{clusterSize})$
+        \State $T.\text{cluster} \gets \text{new array of size } \text{clusterSize}$
+        
+        \For{$i \gets 0$ to $\text{clusterSize} - 1$}
+            \State $T.\text{cluster}[i] \gets \text{VEB-CREATE}(\text{clusterSize})$
+        \EndFor
+    \Else
+        \State $T.\text{summary} \gets \text{NIL}$
+        \State $T.\text{cluster} \gets \text{NIL}$
+    \EndIf
+    
+    \State \Return $T$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 \section{20.3-5}
  %(You may assume k>=2. Your solution should include the dependency on k)
 %jiayi
@@ -85,7 +114,140 @@ Thus we need $n \ge u/ \lg \lg u$, which is $\displaystyle \left \lceil \frac{u}
 
 \section{Exact and FPT Algorithms - Exercise2}
 %wenshuo
+\textbf{Answer A: }\\
+We aim to prove:
+\[
+T(n) \leq 2 \times 3^{n/3} - 1
+\]
+for \( n \geq 2 \) when \( s = 1 \). The recursive relation is:
+\[
+T(n) \leq 1 + T(n-1)
+\]
+and the inductive hypothesis assumes:
+\[
+T(n-1) \leq 2 \times 3^{(n-1)/3} - 1.
+\]
 
+\subsubsection*{Step 1: Substitute the inductive hypothesis}
+Using the recursive relation, we substitute \( T(n-1) \) with the inductive hypothesis:
+\[
+T(n) \leq 1 + \left( 2 \times 3^{(n-1)/3} - 1 \right).
+\]
+
+\subsubsection*{Step 2: Simplify the expression}
+Simplify the terms:
+\[
+T(n) \leq 1 + 2 \times 3^{(n-1)/3} - 1 = 2 \times 3^{(n-1)/3}.
+\]
+
+\subsubsection*{Step 3: Rewrite \( 3^{(n-1)/3} \) in terms of \( 3^{n/3} \)}
+Using the property \( 3^{(n-1)/3} = 3^{n/3} \cdot 3^{-1/3} \), rewrite the expression:
+\[
+T(n) \leq 2 \times 3^{n/3} \cdot 3^{-1/3}.
+\]
+
+\subsubsection*{Step 4: Prove the inequality}
+To prove \( T(n) \leq 2 \times 3^{n/3} - 1 \), it suffices to show:
+\[
+2 \times 3^{n/3} \cdot 3^{-1/3} \leq 2 \times 3^{n/3} - 1.
+\]
+
+Divide through by \( 2 \times 3^{n/3} \) (valid for \( n \geq 2 \)):
+\[
+3^{-1/3} \leq 1 - \frac{1}{2 \times 3^{n/3}}.
+\]
+
+For \( n \geq 2 \), \( 3^{n/3} \geq 3^{2/3} \approx 1.442 \), so:
+\[
+\frac{1}{2 \times 3^{n/3}} \leq \frac{1}{2 \times 1.442} \approx 0.346.
+\]
+
+Thus:
+\[
+1 - \frac{1}{2 \times 3^{n/3}} \geq 1 - 0.346 = 0.654.
+\]
+
+Meanwhile, \( 3^{-1/3} \approx 0.693 \), which satisfies:
+\[
+3^{-1/3} \leq 0.654.
+\]
+
+\subsubsection*{Conclusion}
+For \( n \geq 2 \), the inequality holds:
+\[
+T(n) \leq 2 \times 3^{n/3} - 1.
+\]
+\textbf{Answer B: }\\
+We aim to complete the inductive step for \( n \geq 2 \) and \( s > 1 \), using the given lemma:
+\[
+\left( \frac{s}{3} \right)^s \leq 1 \quad \text{for all integers } s.
+\]
+
+\subsubsection*{Step 1: Restating the inequality}
+The recursive relation is:
+\[
+T(n) \leq 1 + s \cdot T(n-s).
+\]
+Using the inductive hypothesis:
+\[
+T(n-s) \leq 2 \cdot 3^{(n-s)/3} - 1,
+\]
+we substitute this into the relation:
+\[
+T(n) \leq 1 + s \cdot (2 \cdot 3^{(n-s)/3} - 1).
+\]
+
+Expanding:
+\[
+T(n) \leq 1 + 2s \cdot 3^{(n-s)/3} - s.
+\]
+
+\subsubsection*{Step 2: Rewrite \( 3^{(n-s)/3} \) in terms of \( 3^{n/3} \)}
+Express \( 3^{(n-s)/3} \) as \( 3^{n/3} \cdot 3^{-s/3} \):
+\[
+T(n) \leq 1 + 2s \cdot 3^{n/3} \cdot 3^{-s/3} - s.
+\]
+
+To bound \( T(n) \), we need to show:
+\[
+1 + 2s \cdot 3^{n/3} \cdot 3^{-s/3} - s \leq 2 \cdot 3^{n/3} - 1.
+\]
+
+Rearranging terms:
+\[
+2s \cdot 3^{n/3} \cdot 3^{-s/3} \leq 2 \cdot 3^{n/3} - s - 2.
+\]
+
+\subsubsection*{Step 3: Simplify using the lemma}
+The key component is \( s \cdot 3^{-s/3} \), which is bounded by Lemma 1:
+\[
+\left( \frac{s}{3} \right)^s \leq 1.
+\]
+
+Taking the \( s \)-th root:
+\[
+s \cdot 3^{-s/3} \leq 1.
+\]
+
+Thus:
+\[
+2s \cdot 3^{n/3} \cdot 3^{-s/3} \leq 2 \cdot 3^{n/3}.
+\]
+
+\subsubsection*{Step 4: Complete the inequality}
+With \( s \cdot 3^{-s/3} \leq 1 \), the inequality simplifies:
+\[
+1 + 2 \cdot 3^{n/3} - s \leq 2 \cdot 3^{n/3} - 1.
+\]
+
+For \( n \geq 2 \), it is evident \( s \geq 1 \), ensuring the inequality holds:
+\[
+T(n) \leq 2 \cdot 3^{n/3} - 1.
+\]
+
+\subsubsection*{Conclusion}
+Using the inductive hypothesis and Lemma 1, we have proven \( T(n) \leq 2 \cdot 3^{n/3} - 1 \) for \( n \geq 2 \) and \( s > 1 \).
+\
 \section{Exact and FPT Algorithms - Exercise3}
 %jiayi
 
