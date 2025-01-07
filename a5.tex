@@ -31,6 +31,11 @@
 \section{20.3-4}
  %(For the last part, remember that we already use Θ(u) space on the vEBtree. Thus, we can afford to maintain an auxiliary structure using O(u) space without increasing the asymptotic space usage)
 %jiayi
+\textbf{Question: } 
+What happens if you call VEB-TREE-INSERT with an element that is already in the vEB tree? What happens if you call VEB-TREE-DELETE with an element that is not in the vEB tree? Explain why the procedures exhibit the behavior that they do. Show how to modify vEB trees and their operations so that we can check in constant time whether an element is present.\\
+\textbf{Answer:}
+Nothing will happen if users call VEB-TREE-INSERT with an element already in the tree or call VEB-TREE-DELETE with an element not in the tree because vEB tree think all the element is legal by default. When users call a operation with illegal element, it was treat as a normal call and makes a mistake.\\
+To assure the legitimacy of the input, we can simply add a hash set to store the elements in the tree and check whether the input is correct before every operation, it will using a extra O(u) space.
 
 \section{20.3-1}
 % wanjing
@@ -83,7 +88,17 @@ For other keys, it is sufficient to simply store the pointer at the location whe
 \section{20.3-5}
  %(You may assume k>=2. Your solution should include the dependency on k)
 %jiayi
-
+\textbf{Question: } 
+Suppose that instead of $\sqrt[↑]{\mu}$ clusters, each with universe size $\sqrt[↓]{\mu}$, we constructed vEB trees to have $u^{1/k}$ clusters, each with universe size $u^{1 - 1/k}$, where $k > 1$ is a constant. If we were to modify the operations appropriately, what would be their running times? For the purpose of analysis, assume that $u^{1/k}$ and $u^{1 - 1/k}$ are always integers.\\
+\textbf{Answer:}
+After constructing vEB tress have  $u^{1/k}$ clusters, each with universe size $u^{1 - 1/k}$, suppose that an operation like insert still has a time complexity $T(\mu)$.\\
+So the operation in summary is $T(u^{1/k})$ and in clusters is $T(u^{1 - 1/k})$.\\
+The running time would be:
+\[
+T(\mu) = T(u^{1/k}) + T(u^{1 - 1/k}) + O(1)
+\]
+When k = 2, it is equal to the original question, so the running time would still be $T(\mu)= O(\lg {\lg \mu})$.\\
+When $k > 2$, we can get the $T(\mu)= O(\lg {\lg \mu})$ with similar calculation.
 \section{20.3-6}
 %wanjing
 \textbf{Question: } 
@@ -250,6 +265,11 @@ Using the inductive hypothesis and Lemma 1, we have proven \( T(n) \leq 2 \cdot 
 \
 \section{Exact and FPT Algorithms - Exercise3}
 %jiayi
+\textbf{Question:}
+What is the space needed for the above recursive independent set algorithm from Fomin-Kratsch?\\
+\textbf{Answer:} \\
+The algorithm is a recursive algorithm and it will not store the whole tree in each space in the recursive stack, it only need to store the local information in each step of recursion.\\
+So the space needed only related to the depth of recursion, in Fomin-Kratsch, the depth will less or equal than the input size n, then the space complexity is O(n).
 
 \section{Exact and FPT Algorithms - Exercise4}
 %wanjing
