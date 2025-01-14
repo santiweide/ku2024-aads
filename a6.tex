@@ -62,6 +62,15 @@ The order of the diagonal that I created:
 \[v_{8} \rightarrow v_{10}\]
 \section{Exercises 3.4}
 %jiayi
+\textbf{Question:}
+Suppose that a simple polygon P with n vertices is given, together with a set of diagonals that partitions P into convex quadrilaterals. How many cameras are sufficient to guard P? Why doesn’t this contradict the Art Gallery Theorem?\\
+\textbf{Answer:} 
+From the polygon P can be divided into a set of convex quadrilaterals it follows that n = 2 * t + 4 where $t \geq 0$. This conclusion can easily be deduced by contraposition where we suppose that n =  2 * t + 5.\\
+Then we can consider the range of n from 4 to 2*t + 4, every time we add two vertices, it is equal to add a convex quadrilaterals on the base of the last polygon.\\
+And the best position of a camera is the diagonals which is a communal edge of two quadrilaterals so it can guard two quadrilaterals.\\
+So suppose that the minimum number of cameras is $x$, $x = 1$ when n = 2*0 + 4 or 2*1 + 4, $x = 2$ when we add the third and forth quadrilaterals(where n = 8 or 10), so we can deduce that $x \leq \lceil \frac{t + 1}{2}\rceil = \lceil \frac{n}{4}\rceil \leq \frac{n}{3} $ (where the Art Gallery Theorem given).\\
+So $\frac{n}{4}$ cameras are sufficient, and it doesn't contradict the Art Gallery Theorem because the number we calculated is smaller than the upper bound it given.
+
 
 \section{Exercises 3.7}
 %wanjing
